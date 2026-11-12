@@ -1,128 +1,112 @@
 import { NavLink } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
-import {
-  LayoutDashboard,
-  ShoppingCart,
-  Package,
-  FolderOpen,
-  Warehouse,
-  Users,
-  UserCircle,
-  DollarSign,
-  ShoppingBag,
-  TrendingDown,
-  FileText,
-  Settings,
-  Activity,
-  X
-} from 'lucide-react';
-
-const Sidebar = ({ isOpen, onClose }) => {
-  const { user, hasRole } = useAuth();
-
-  const menuItems = [
-    { path: '/dashboard', icon: LayoutDashboard, label: 'Dashboard', roles: ['admin', 'manager', 'cashier', 'inventory_staff'] },
-    { path: '/pos', icon: ShoppingCart, label: 'Point of Sale', roles: ['admin', 'manager', 'cashier'] },
-    { path: '/products', icon: Package, label: 'Products', roles: ['admin', 'manager', 'inventory_staff'] },
-    { path: '/categories', icon: FolderOpen, label: 'Categories', roles: ['admin', 'manager'] },
-    { path: '/inventory', icon: Warehouse, label: 'Inventory', roles: ['admin', 'manager', 'inventory_staff'] },
-    { path: '/suppliers', icon: Users, label: 'Suppliers', roles: ['admin', 'manager'] },
-    { path: '/customers', icon: UserCircle, label: 'Customers', roles: ['admin', 'manager', 'cashier'] },
-    { path: '/sales', icon: DollarSign, label: 'Sales', roles: ['admin', 'manager', 'cashier'] },
-    { path: '/purchases', icon: ShoppingBag, label: 'Purchases', roles: ['admin', 'manager', 'inventory_staff'] },
-    { path: '/expenses', icon: TrendingDown, label: 'Expenses', roles: ['admin', 'manager'] },
-    { path: '/reports', icon: FileText, label: 'Reports', roles: ['admin', 'manager'] },
-    { path: '/users', icon: Settings, label: 'Users & Roles', roles: ['admin', 'manager'] },
-    { path: '/activity-logs', icon: Activity, label: 'Activity Logs', roles: ['admin', 'manager'] },
-  ];
-
-  const filteredMenuItems = menuItems.filter(item => 
-    item.roles.includes(user.role)
-  );
-
-  return (
-    <>
-      {/* Mobile overlay */}
-      {isOpen && (
-        <div
-          className="fixed inset-0 bg-black bg-opacity-50 z-20 lg:hidden"
-          onClick={onClose}
-        />
-      )}
-
-      {/* Sidebar */}
-      <aside
-        className={`
-          fixed lg:static inset-y-0 left-0 z-30
-          w-64 bg-white shadow-lg
-          transform transition-transform duration-300 ease-in-out
-          ${isOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'}
-        `}
-      >
-        <div className="flex flex-col h-full">
-          {/* Logo */}
-          <div className="flex items-center justify-between p-6 border-b">
-            <div>
-              <h1 className="text-xl font-bold text-red-600">ESTRELLA FOOD HUB</h1>
-              <p className="text-xs text-gray-500">ERP System</p>
-            </div>
-            <button
-              onClick={onClose}
-              className="lg:hidden text-gray-500 hover:text-gray-700"
-            >
-              <X size={24} />
-            </button>
-          </div>
-
-          {/* Navigation */}
-          <nav className="flex-1 overflow-y-auto p-4">
-            <ul className="space-y-1">
-              {filteredMenuItems.map((item) => {
-                const Icon = item.icon;
-                return (
-                  <li key={item.path}>
-                    <NavLink
-                      to={item.path}
-                      onClick={() => window.innerWidth < 1024 && onClose()}
-                      className={({ isActive }) =>
-                        `flex items-center gap-3 px-4 py-3 rounded-lg transition-colors ${
-                          isActive
-                            ? 'bg-red-50 text-red-600 font-medium'
-                            : 'text-gray-700 hover:bg-gray-50'
-                        }`
-                      }
-                    >
-                      <Icon size={20} />
-                      <span>{item.label}</span>
-                    </NavLink>
-                  </li>
-                );
-              })}
-            </ul>
-          </nav>
-
-          {/* User info */}
-          <div className="p-4 border-t">
-            <div className="flex items-center gap-3">
-              <div className="w-10 h-10 bg-red-100 rounded-full flex items-center justify-center">
-                <span className="text-red-600 font-semibold">
-                  {user.first_name.charAt(0)}{user.last_name.charAt(0)}
-                </span>
-              </div>
-              <div className="flex-1 min-w-0">
-                <p className="text-sm font-medium text-gray-900 truncate">
-                  {user.first_name} {user.last_name}
-                </p>
-                <p className="text-xs text-gray-500 capitalize truncate">
-                  {user.role.replace('_', ' ')}
-                </p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </aside>
-    </>
-  );
-};
-
-export default Sidebar;
+import { LayoutDashboard, ShoppingCart, Package, FolderOpen, Warehouse, Users, UserCircle, Receipt, ShoppingBag, TrendingDown, FileText, ShieldCheck, Activity, X, PanelLeftClose, PanelLeftOpen } from 'lucide-react';
+import Brand from './Brand';
+const all = ['admin', 'manager', 'cashier', 'inventory_staff'];
+const management = ['admin', 'manager'];
+export const navigation = [{
+  path: '/dashboard',
+  icon: LayoutDashboard,
+  label: 'Overview',
+  group: 'Workspace',
+  roles: all
+}, {
+  path: '/pos',
+  icon: ShoppingCart,
+  label: 'Point of sale',
+  group: 'Workspace',
+  roles: ['admin', 'manager', 'cashier']
+}, {
+  path: '/sales',
+  icon: Receipt,
+  label: 'Sales history',
+  group: 'Workspace',
+  roles: ['admin', 'manager', 'cashier']
+}, {
+  path: '/customers',
+  icon: UserCircle,
+  label: 'Customers',
+  group: 'Workspace',
+  roles: ['admin', 'manager', 'cashier']
+}, {
+  path: '/products',
+  icon: Package,
+  label: 'Products',
+  group: 'Catalog & stock',
+  roles: ['admin', 'manager', 'inventory_staff']
+}, {
+  path: '/categories',
+  icon: FolderOpen,
+  label: 'Categories',
+  group: 'Catalog & stock',
+  roles: management
+}, {
+  path: '/inventory',
+  icon: Warehouse,
+  label: 'Inventory',
+  group: 'Catalog & stock',
+  roles: ['admin', 'manager', 'inventory_staff']
+}, {
+  path: '/purchases',
+  icon: ShoppingBag,
+  label: 'Purchases',
+  group: 'Catalog & stock',
+  roles: ['admin', 'manager', 'inventory_staff']
+}, {
+  path: '/suppliers',
+  icon: Users,
+  label: 'Suppliers',
+  group: 'Catalog & stock',
+  roles: management
+}, {
+  path: '/expenses',
+  icon: TrendingDown,
+  label: 'Expenses',
+  group: 'Management',
+  roles: management
+}, {
+  path: '/reports',
+  icon: FileText,
+  label: 'Reports & insights',
+  group: 'Management',
+  roles: management
+}, {
+  path: '/users',
+  icon: ShieldCheck,
+  label: 'Users & roles',
+  group: 'Management',
+  roles: management
+}, {
+  path: '/activity-logs',
+  icon: Activity,
+  label: 'Activity logs',
+  group: 'Management',
+  roles: management
+}];
+export default function Sidebar({
+  collapsed,
+  onToggle,
+  onClose,
+  mobile = false
+}) {
+  const {
+    user
+  } = useAuth();
+  const items = navigation.filter(item => item.roles.includes(user?.role));
+  return <aside className={`app-sidebar ${collapsed && !mobile ? 'sidebar-collapsed' : ''}`} aria-label="Main navigation">
+    <div className="sidebar-brand"><Brand compact={collapsed && !mobile} />{mobile && <button className="icon-button" onClick={onClose} aria-label="Close navigation" type="button"><X size={20} /></button>}</div>
+    <nav className="sidebar-nav">{['Workspace', 'Catalog & stock', 'Management'].map(group => {
+        const links = items.filter(item => item.group === group);
+        return links.length > 0 && <div className="nav-group" key={group}><p className="nav-group-title">{collapsed && !mobile ? '···' : group}</p>{links.map(({
+            path,
+            label,
+            icon: Icon
+          }) => <NavLink key={path} to={path} onClick={onClose} title={collapsed && !mobile ? label : undefined} className={({
+            isActive
+          }) => `nav-link ${isActive ? 'active' : ''}`}><Icon size={19} aria-hidden="true" /><span>{label}</span></NavLink>)}</div>;
+      })}</nav>
+    <div className="sidebar-footer">{!mobile && <button className="nav-link w-full" onClick={onToggle} title={collapsed ? 'Expand navigation' : 'Collapse navigation'} aria-label={collapsed ? 'Expand navigation' : 'Collapse navigation'} type="button">{collapsed ? <PanelLeftOpen size={19} /> : <PanelLeftClose size={19} />}<span>Collapse sidebar</span></button>}
+      <div className="sidebar-account"><span className="avatar">{user?.first_name?.[0]}{user?.last_name?.[0]}</span><div><strong>{user?.first_name} {user?.last_name}</strong><small>{user?.role?.replaceAll('_', ' ')}</small></div><span className="account-dot" title="Signed in" /></div>
+    </div>
+  </aside>;
+}

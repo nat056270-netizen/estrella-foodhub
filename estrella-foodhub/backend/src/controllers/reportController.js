@@ -5,21 +5,21 @@ const { Op } = require('sequelize');
 exports.getSalesReport = async (req, res) => {
   try {
     const { start_date, end_date, cashier_id, payment_method } = req.query;
-    
+
     const where = {
       status: 'completed'
     };
-    
+
     if (start_date && end_date) {
       where.created_at = {
         [Op.between]: [new Date(start_date), new Date(end_date)]
       };
     }
-    
+
     if (cashier_id) {
       where.cashier_id = cashier_id;
     }
-    
+
     if (payment_method) {
       where.payment_method = payment_method;
     }
@@ -65,13 +65,13 @@ exports.getSalesReport = async (req, res) => {
 exports.getInventoryReport = async (req, res) => {
   try {
     const { category_id, status } = req.query;
-    
+
     const where = {};
-    
+
     if (category_id) {
       where.category_id = category_id;
     }
-    
+
     if (status) {
       where.status = status;
     } else {
@@ -123,15 +123,15 @@ exports.getInventoryReport = async (req, res) => {
 exports.getPurchaseReport = async (req, res) => {
   try {
     const { start_date, end_date, supplier_id } = req.query;
-    
+
     const where = {};
-    
+
     if (start_date && end_date) {
       where.purchase_date = {
         [Op.between]: [new Date(start_date), new Date(end_date)]
       };
     }
-    
+
     if (supplier_id) {
       where.supplier_id = supplier_id;
     }
@@ -175,9 +175,9 @@ exports.getPurchaseReport = async (req, res) => {
 exports.getFinancialSummary = async (req, res) => {
   try {
     const { start_date, end_date } = req.query;
-    
+
     const dateFilter = {};
-    
+
     if (start_date && end_date) {
       dateFilter.created_at = {
         [Op.between]: [new Date(start_date), new Date(end_date)]
@@ -261,7 +261,7 @@ exports.getFinancialSummary = async (req, res) => {
 exports.getProductSalesReport = async (req, res) => {
   try {
     const { start_date, end_date, limit = 50 } = req.query;
-    
+
     const dateFilter = {};
     if (start_date && end_date) {
       dateFilter.created_at = {

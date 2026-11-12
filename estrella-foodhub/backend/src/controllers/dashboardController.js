@@ -32,7 +32,7 @@ exports.getDashboardStats = async (req, res) => {
       where: { status: 'active' },
       attributes: ['current_stock', 'cost_price']
     });
-    
+
     const totalInventoryValue = products.reduce((sum, product) => {
       return sum + (parseFloat(product.cost_price) * product.current_stock);
     }, 0);

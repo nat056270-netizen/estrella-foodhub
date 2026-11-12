@@ -1,294 +1,113 @@
-import { useState, useEffect } from 'react';
+import ResponsiveTable from '../components/ResponsiveTable';
+import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import api from '../services/api';
-import { toast } from 'react-toastify';
 import { formatCurrency, formatDateTime, getStockStatus } from '../utils/format';
-import {
-  DollarSign,
-  ShoppingCart,
-  Package,
-  Warehouse,
-  AlertTriangle,
-  TrendingUp,
-  TrendingDown,
-  ArrowRight
-} from 'lucide-react';
-import { LineChart, Line, BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Legend } from 'recharts';
+import { Wallet, ShoppingCart, Package, Warehouse, AlertTriangle, ArrowRight, RefreshCw, UtensilsCrossed, Receipt } from 'lucide-react';
+import { AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
 import Loading from '../components/Loading';
-
-const Dashboard = () => {
-  const [stats, setStats] = useState(null);
-  const [salesChart, setSalesChart] = useState([]);
-  const [topProducts, setTopProducts] = useState([]);
-  const [recentTransactions, setRecentTransactions] = useState([]);
-  const [lowStockProducts, setLowStockProducts] = useState([]);
+import { ErrorState, EmptyState } from '../components/AsyncState';
+import { useAuth } from '../context/AuthContext';
+export default function Dashboard() {
+  const {
+    user,
+    hasRole
+  } = useAuth();
+  const [data, setData] = useState(null);
   const [loading, setLoading] = useState(true);
-
+  const [error, setError] = useState('');
+  const [period, setPeriod] = useState('daily');
+  const [reducedMotion, setReducedMotion] = useState(window.matchMedia('(prefers-reduced-motion: reduce)').matches);
   useEffect(() => {
-    fetchDashboardData();
+    const media = window.matchMedia('(prefers-reduced-motion: reduce)');
+    const update = () => setReducedMotion(media.matches);
+    media.addEventListener('change', update);
+    return () => media.removeEventListener('change', update);
   }, []);
-
-  const fetchDashboardData = async () => {
+  const fetchData = async () => {
+    setLoading(true);
+    setError('');
     try {
-      const [statsRes, chartRes, productsRes, transactionsRes, lowStockRes] = await Promise.all([
-        api.get('/dashboard/stats'),
-        api.get('/dashboard/sales-chart?period=daily'),
-        api.get('/dashboard/top-products?limit=5'),
-        api.get('/dashboard/recent-transactions?limit=10'),
-        api.get('/dashboard/low-stock?limit=10')
-      ]);
-
-      setStats(statsRes.data.data);
-      setSalesChart(chartRes.data.data);
-      setTopProducts(productsRes.data.data);
-      setRecentTransactions(transactionsRes.data.data);
-      setLowStockProducts(lowStockRes.data.data);
-    } catch (error) {
-      toast.error('Failed to load dashboard data');
-      console.error(error);
+      const responses = await Promise.all(['/dashboard/stats', '/dashboard/sales-chart?period=' + period, '/dashboard/top-products?limit=5', '/dashboard/recent-transactions?limit=6', '/dashboard/low-stock?limit=5'].map(url => api.get(url)));
+      setData({
+        stats: responses[0].data.data,
+        chart: responses[1].data.data.map(row => ({
+          ...row,
+          total: Number(row.total)
+        })),
+        products: responses[2].data.data,
+        transactions: responses[3].data.data,
+        stock: responses[4].data.data
+      });
+    } catch (err) {
+      setError(err.response?.data?.message || 'Unable to reach your business data. Check that the API is running and try again.');
     } finally {
       setLoading(false);
     }
   };
-
-  if (loading) {
-    return <Loading message="Loading dashboard..." />;
-  }
-
-  return (
-    <div className="space-y-6">
-      {/* Page Header */}
-      <div>
-        <h1 className="text-2xl font-bold text-gray-900">Dashboard</h1>
-        <p className="text-gray-600">Overview of your business performance</p>
-      </div>
-
-      {/* Stats Cards */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-        <div className="card">
-          <div className="flex items-center justify-between">
-            <div>
-              <p className="text-sm text-gray-600">Today's Sales</p>
-              <p className="text-2xl font-bold text-gray-900 mt-1">
-                {formatCurrency(stats.todaysSales)}
-              </p>
-            </div>
-            <div className="p-3 bg-green-100 rounded-lg">
-              <DollarSign className="text-green-600" size={24} />
-            </div>
-          </div>
-        </div>
-
-        <div className="card">
-          <div className="flex items-center justify-between">
-            <div>
-              <p className="text-sm text-gray-600">Transactions</p>
-              <p className="text-2xl font-bold text-gray-900 mt-1">
-                {stats.todaysTransactions}
-              </p>
-            </div>
-            <div className="p-3 bg-blue-100 rounded-lg">
-              <ShoppingCart className="text-blue-600" size={24} />
-            </div>
-          </div>
-        </div>
-
-        <div className="card">
-          <div className="flex items-center justify-between">
-            <div>
-              <p className="text-sm text-gray-600">Total Products</p>
-              <p className="text-2xl font-bold text-gray-900 mt-1">
-                {stats.totalProducts}
-              </p>
-            </div>
-            <div className="p-3 bg-purple-100 rounded-lg">
-              <Package className="text-purple-600" size={24} />
-            </div>
-          </div>
-        </div>
-
-        <div className="card">
-          <div className="flex items-center justify-between">
-            <div>
-              <p className="text-sm text-gray-600">Inventory Value</p>
-              <p className="text-2xl font-bold text-gray-900 mt-1">
-                {formatCurrency(stats.totalInventoryValue)}
-              </p>
-            </div>
-            <div className="p-3 bg-orange-100 rounded-lg">
-              <Warehouse className="text-orange-600" size={24} />
-            </div>
-          </div>
-        </div>
-      </div>
-
-      {/* Alert Cards */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-        <div className="card bg-yellow-50 border-yellow-200">
-          <div className="flex items-center gap-3">
-            <AlertTriangle className="text-yellow-600" size={32} />
-            <div>
-              <p className="text-sm text-yellow-700">Low Stock Items</p>
-              <p className="text-3xl font-bold text-yellow-900">{stats.lowStockItems}</p>
-            </div>
-          </div>
-        </div>
-
-        <div className="card bg-red-50 border-red-200">
-          <div className="flex items-center gap-3">
-            <TrendingDown className="text-red-600" size={32} />
-            <div>
-              <p className="text-sm text-red-700">Out of Stock</p>
-              <p className="text-3xl font-bold text-red-900">{stats.outOfStockItems}</p>
-            </div>
-          </div>
-        </div>
-
-        <div className="card bg-green-50 border-green-200">
-          <div className="flex items-center gap-3">
-            <TrendingUp className="text-green-600" size={32} />
-            <div>
-              <p className="text-sm text-green-700">Net Sales Today</p>
-              <p className="text-2xl font-bold text-green-900">{formatCurrency(stats.netSales)}</p>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      {/* Charts */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        {/* Sales Chart */}
-        <div className="card">
-          <h3 className="text-lg font-semibold mb-4">Daily Sales (Last 7 Days)</h3>
-          <ResponsiveContainer width="100%" height={300}>
-            <LineChart data={salesChart}>
-              <CartesianGrid strokeDasharray="3 3" />
-              <XAxis dataKey="date" />
-              <YAxis />
-              <Tooltip />
-              <Legend />
-              <Line type="monotone" dataKey="total" stroke="#dc2626" name="Sales" />
-            </LineChart>
-          </ResponsiveContainer>
-        </div>
-
-        {/* Top Products */}
-        <div className="card">
-          <div className="flex items-center justify-between mb-4">
-            <h3 className="text-lg font-semibold">Top Selling Products</h3>
-            <Link to="/reports" className="text-sm text-red-600 hover:text-red-700">
-              View All
-            </Link>
-          </div>
-          <ResponsiveContainer width="100%" height={300}>
-            <BarChart data={topProducts}>
-              <CartesianGrid strokeDasharray="3 3" />
-              <XAxis dataKey="product.name" />
-              <YAxis />
-              <Tooltip />
-              <Bar dataKey="total_quantity" fill="#dc2626" name="Quantity Sold" />
-            </BarChart>
-          </ResponsiveContainer>
-        </div>
-      </div>
-
-      {/* Tables */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        {/* Recent Transactions */}
-        <div className="card">
-          <div className="flex items-center justify-between mb-4">
-            <h3 className="text-lg font-semibold">Recent Transactions</h3>
-            <Link to="/sales" className="text-sm text-red-600 hover:text-red-700 flex items-center gap-1">
-              View All <ArrowRight size={16} />
-            </Link>
-          </div>
-          <div className="overflow-x-auto">
-            <table className="min-w-full">
-              <thead className="bg-gray-50">
-                <tr>
-                  <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Transaction</th>
-                  <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Amount</th>
-                  <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Status</th>
-                </tr>
-              </thead>
-              <tbody className="divide-y divide-gray-200">
-                {recentTransactions.map((transaction) => (
-                  <tr key={transaction.id} className="hover:bg-gray-50">
-                    <td className="px-4 py-3">
-                      <div className="text-sm font-medium text-gray-900">
-                        {transaction.transaction_number}
-                      </div>
-                      <div className="text-xs text-gray-500">
-                        {formatDateTime(transaction.created_at)}
-                      </div>
-                    </td>
-                    <td className="px-4 py-3 text-sm text-gray-900">
-                      {formatCurrency(transaction.total)}
-                    </td>
-                    <td className="px-4 py-3">
-                      <span className={`badge ${
-                        transaction.status === 'completed' ? 'badge-success' :
-                        transaction.status === 'void' ? 'badge-danger' :
-                        'badge-warning'
-                      }`}>
-                        {transaction.status}
-                      </span>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-        </div>
-
-        {/* Low Stock Products */}
-        <div className="card">
-          <div className="flex items-center justify-between mb-4">
-            <h3 className="text-lg font-semibold">Low Stock Products</h3>
-            <Link to="/inventory" className="text-sm text-red-600 hover:text-red-700 flex items-center gap-1">
-              View All <ArrowRight size={16} />
-            </Link>
-          </div>
-          <div className="overflow-x-auto">
-            <table className="min-w-full">
-              <thead className="bg-gray-50">
-                <tr>
-                  <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Product</th>
-                  <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Stock</th>
-                  <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Status</th>
-                </tr>
-              </thead>
-              <tbody className="divide-y divide-gray-200">
-                {lowStockProducts.map((product) => {
-                  const status = getStockStatus(product);
-                  return (
-                    <tr key={product.id} className="hover:bg-gray-50">
-                      <td className="px-4 py-3">
-                        <div className="text-sm font-medium text-gray-900">
-                          {product.name}
-                        </div>
-                        <div className="text-xs text-gray-500">
-                          SKU: {product.sku}
-                        </div>
-                      </td>
-                      <td className="px-4 py-3 text-sm text-gray-900">
-                        {product.current_stock} / {product.minimum_stock}
-                      </td>
-                      <td className="px-4 py-3">
-                        <span className={`badge badge-${status.color}`}>
-                          {status.label}
-                        </span>
-                      </td>
-                    </tr>
-                  );
-                })}
-              </tbody>
-            </table>
-          </div>
-        </div>
-      </div>
+  useEffect(() => {
+    fetchData();
+  }, [period]);
+  if (loading) return <Loading message="Preparing your business overview…" />;
+  if (error || !data?.stats) return <ErrorState message={error} onRetry={fetchData} />;
+  const {
+    stats,
+    chart,
+    products,
+    transactions,
+    stock
+  } = data;
+  const cards = [{
+    label: 'Sales today',
+    value: formatCurrency(stats.todaysSales),
+    detail: 'Completed transactions',
+    icon: Wallet,
+    featured: true
+  }, {
+    label: 'Orders today',
+    value: stats.todaysTransactions,
+    detail: 'Successfully completed',
+    icon: ShoppingCart
+  }, {
+    label: 'Active products',
+    value: stats.totalProducts,
+    detail: 'In your product catalog',
+    icon: Package
+  }, {
+    label: 'Inventory value',
+    value: formatCurrency(stats.totalInventoryValue),
+    detail: 'Based on current stock cost',
+    icon: Warehouse
+  }];
+  return <div className="space-y-6">
+    <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4"><div><p className="eyebrow">The bigger picture</p><h1 className="page-title">Good to see you, {user?.first_name}.</h1><p className="page-description">Here’s what’s happening at your food hub today.</p></div><div className="flex gap-2"><button className="btn btn-secondary" onClick={fetchData} title="Refresh overview" type="button"><RefreshCw size={16} /><span className="hidden sm:inline">Refresh</span></button>{hasRole(['admin', 'manager', 'cashier']) && <Link to="/pos" className="btn btn-primary"><ShoppingCart size={17} /> New sale</Link>}</div></div>
+    <div className="kpi-grid">{cards.map(({
+        label,
+        value,
+        detail,
+        icon: Icon,
+        featured
+      }) => <div key={label} className={`card kpi-card ${featured ? 'kpi-featured' : ''}`}><div className="flex items-center justify-between"><span className="kpi-icon"><Icon size={19} /></span><span className="text-xs opacity-50">Today</span></div><p className="kpi-label">{label}</p><p className="kpi-value">{value}</p><p className="kpi-detail">{detail}</p></div>)}</div>
+    {(Number(stats.lowStockItems) > 0 || Number(stats.outOfStockItems) > 0) && <div className="stock-banner"><AlertTriangle size={20} style={{
+        color: 'var(--accent)'
+      }} /><p><strong>{stats.lowStockItems} low-stock</strong> and <strong>{stats.outOfStockItems} out-of-stock</strong> products need a look.</p>{hasRole(['admin', 'manager', 'inventory_staff']) && <Link to="/inventory" className="text-link">Review inventory <ArrowRight size={15} /></Link>}</div>}
+    <div className="dashboard-charts">
+      <section className="card"><div className="flex flex-wrap items-center justify-between gap-3"><div><h2 className="section-heading">Sales overview</h2><p className="page-description">Revenue from completed sales</p></div><select className="input w-auto text-xs" aria-label="Sales chart period" value={period} onChange={e => setPeriod(e.target.value)}><option value="daily">Last 7 days</option><option value="weekly">Last 8 weeks</option><option value="monthly">Last 6 months</option></select></div>
+        {chart.length ? <><div className="chart-frame" role="img" aria-label="Sales revenue by date; values are available in the table below"><ResponsiveContainer width="100%" height="100%"><AreaChart data={chart} margin={{
+                top: 10,
+                right: 10,
+                left: 0,
+                bottom: 0
+              }}><defs><linearGradient id="revenue-fill" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stopColor="#e47d45" stopOpacity={.22} /><stop offset="100%" stopColor="#e47d45" stopOpacity={0} /></linearGradient></defs><CartesianGrid stroke="var(--line)" vertical={false} strokeDasharray="3 4" /><XAxis dataKey="date" tickLine={false} axisLine={false} minTickGap={20} tickMargin={12} /><YAxis tickLine={false} axisLine={false} width={48} tickFormatter={v => v >= 1000 ? (v / 1000).toFixed(0) + 'k' : v} /><Tooltip formatter={value => [formatCurrency(value), 'Revenue']} /><Area type="monotone" dataKey="total" stroke="#d36a30" strokeWidth={2.5} fill="url(#revenue-fill)" isAnimationActive={!reducedMotion} animationDuration={220} /></AreaChart></ResponsiveContainer></div><details className="text-xs text-gray-500 mt-3"><summary className="cursor-pointer py-2">View chart data</summary><div className="overflow-x-auto"><ResponsiveTable className="table" label="Dashboard records"><thead><tr><th scope="col">Period</th><th scope="col">Sales</th></tr></thead><tbody>{chart.map(row => <tr key={row.date}><td>{row.date}</td><td>{formatCurrency(row.total)}</td></tr>)}</tbody></ResponsiveTable></div></details></> : <EmptyState title="Your next sale starts the story" message="Completed sales will appear in this chart." />}
+      </section>
+      <section className="card"><div className="flex justify-between items-center"><h2 className="section-heading">Popular products</h2><span className="badge badge-secondary">All time</span></div><p className="page-description mb-2">Ranked by quantity sold</p>{products.length ? products.map((row, index) => <div className="product-ranking" key={row.product_id}><span className="rank-number">0{index + 1}</span><span className="rank-art"><UtensilsCrossed size={18} /></span><div className="flex-1 min-w-0"><p className="text-xs font-semibold truncate">{row.product?.name || 'Product unavailable'}</p><div className="rank-track"><span style={{
+                width: Math.max(3, Number(row.total_quantity) / Math.max(1, Number(products[0].total_quantity)) * 100) + '%'
+              }} /></div></div><div className="text-right"><strong className="text-xs">{row.total_quantity}</strong><p className="text-gray-500 text-xs">sold</p></div></div>) : <EmptyState title="No products sold yet" message="Your best sellers will appear here." />}</section>
     </div>
-  );
-};
-
-export default Dashboard;
+    <div className="grid grid-cols-1 xl:grid-cols-3 gap-5">
+      <section className="card xl:col-span-2"><div className="flex justify-between items-center gap-3 mb-5"><div><h2 className="section-heading">Recent transactions</h2><p className="page-description">The latest activity at your counter</p></div>{hasRole(['admin', 'manager', 'cashier']) && <Link to="/sales" className="text-link">View all <ArrowRight size={14} /></Link>}</div>{transactions.length ? <div className="overflow-x-auto"><ResponsiveTable className="table" label="Dashboard records"><thead><tr><th scope="col">Transaction</th><th scope="col">Customer</th><th scope="col">Amount</th><th scope="col">Status</th></tr></thead><tbody>{transactions.map(row => <tr key={row.id}><td><div className="flex items-center gap-3"><Receipt size={16} className="text-gray-400" /><div><p className="font-semibold text-xs">{row.transaction_number}</p><p className="text-gray-500 text-xs mt-1">{formatDateTime(row.created_at)}</p></div></div></td><td>{row.customer?.name || 'Walk-in customer'}</td><td className="font-semibold">{formatCurrency(row.total)}</td><td><span className={`badge ${row.status === 'completed' ? 'badge-success' : row.status === 'void' ? 'badge-danger' : 'badge-warning'}`}>{row.status}</span></td></tr>)}</tbody></ResponsiveTable></div> : <EmptyState title="No transactions yet" message="Your latest transactions will appear here." />}</section>
+      <section className="card"><h2 className="section-heading">Stock watch</h2><p className="page-description mb-3">Products at or below their minimum</p>{stock.length ? stock.map(row => <div key={row.id} className="py-4 border-b last:border-0 flex items-center gap-3"><span className="rank-art"><Package size={17} /></span><div className="flex-1 min-w-0"><p className="text-xs font-semibold truncate">{row.name}</p><p className="text-xs text-gray-500 mt-1">{row.current_stock} {row.unit} remaining</p></div><span className={`badge badge-${getStockStatus(row).color}`}>{Number(row.current_stock) <= 0 ? 'Out' : 'Low'}</span></div>) : <EmptyState title="Stock looks good" message="No products are currently below their minimum." />}</section>
+    </div>
+    <div className="flex flex-wrap justify-between gap-2 pt-1 text-xs text-gray-500"><span>Estrella Foodhub · Business overview</span><span>Sales less today’s expenses: <strong className="text-gray-700">{formatCurrency(stats.netSales)}</strong></span></div>
+  </div>;
+}

@@ -7,7 +7,7 @@ const { Op } = require('sequelize');
 
 exports.createSale = async (req, res) => {
   const t = await sequelize.transaction();
-  
+
   try {
     const { customer_id, items, payment_method, amount_received, discount = 0, tax = 0 } = req.body;
 
@@ -24,7 +24,7 @@ exports.createSale = async (req, res) => {
     let subtotal = 0;
     for (const item of items) {
       const product = await Product.findByPk(item.product_id);
-      
+
       if (!product) {
         await t.rollback();
         return res.status(404).json({
@@ -158,19 +158,19 @@ exports.createSale = async (req, res) => {
 exports.getAllSales = async (req, res) => {
   try {
     const { start_date, end_date, payment_method, cashier_id } = req.query;
-    
+
     const where = {};
-    
+
     if (start_date && end_date) {
       where.created_at = {
         [Op.between]: [new Date(start_date), new Date(end_date)]
       };
     }
-    
+
     if (payment_method) {
       where.payment_method = payment_method;
     }
-    
+
     if (cashier_id) {
       where.cashier_id = cashier_id;
     }
@@ -238,7 +238,7 @@ exports.getSale = async (req, res) => {
 
 exports.voidSale = async (req, res) => {
   const t = await sequelize.transaction();
-  
+
   try {
     const sale = await Sale.findByPk(req.params.id, {
       include: [{ model: SaleItem, as: 'items' }]

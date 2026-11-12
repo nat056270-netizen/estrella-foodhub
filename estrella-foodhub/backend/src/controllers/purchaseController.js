@@ -7,7 +7,7 @@ const { Op } = require('sequelize');
 
 exports.createPurchase = async (req, res) => {
   const t = await sequelize.transaction();
-  
+
   try {
     const { supplier_id, items, notes } = req.body;
 
@@ -90,7 +90,7 @@ exports.createPurchase = async (req, res) => {
 
 exports.receivePurchase = async (req, res) => {
   const t = await sequelize.transaction();
-  
+
   try {
     const purchase = await Purchase.findByPk(req.params.id, {
       include: [{ model: PurchaseItem, as: 'items' }]
@@ -115,7 +115,7 @@ exports.receivePurchase = async (req, res) => {
     // Update inventory for each item
     for (const item of purchase.items) {
       const product = await Product.findByPk(item.product_id);
-      
+
       // Update stock
       await product.update({
         current_stock: product.current_stock + item.quantity,
@@ -183,19 +183,19 @@ exports.receivePurchase = async (req, res) => {
 exports.getAllPurchases = async (req, res) => {
   try {
     const { start_date, end_date, supplier_id, status } = req.query;
-    
+
     const where = {};
-    
+
     if (start_date && end_date) {
       where.purchase_date = {
         [Op.between]: [new Date(start_date), new Date(end_date)]
       };
     }
-    
+
     if (supplier_id) {
       where.supplier_id = supplier_id;
     }
-    
+
     if (status) {
       where.status = status;
     }

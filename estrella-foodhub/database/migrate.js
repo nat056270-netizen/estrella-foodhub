@@ -5,12 +5,12 @@ const migrate = async () => {
   try {
     console.log('Starting database migration...');
 
-    // Create all tables
-    await sequelize.sync({ force: true });
+    // Create missing tables while preserving existing data.
+    await sequelize.sync();
 
     console.log('✓ Database migration completed successfully');
-    console.log('✓ All tables created');
-    
+    console.log('✓ Missing tables created; existing records preserved');
+
     process.exit(0);
   } catch (error) {
     console.error('✗ Migration failed:', error);

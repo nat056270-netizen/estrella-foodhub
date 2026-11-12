@@ -6,16 +6,16 @@ const { Op } = require('sequelize');
 exports.getInventory = async (req, res) => {
   try {
     const { search, status } = req.query;
-    
+
     const where = {};
-    
+
     if (search) {
       where[Op.or] = [
         { name: { [Op.like]: `%${search}%` } },
         { sku: { [Op.like]: `%${search}%` } }
       ];
     }
-    
+
     if (status === 'low_stock') {
       where[Op.and] = [
         sequelize.where(
@@ -59,17 +59,17 @@ exports.getInventory = async (req, res) => {
 exports.getInventoryMovements = async (req, res) => {
   try {
     const { product_id, type, start_date, end_date } = req.query;
-    
+
     const where = {};
-    
+
     if (product_id) {
       where.product_id = product_id;
     }
-    
+
     if (type) {
       where.type = type;
     }
-    
+
     if (start_date && end_date) {
       where.created_at = {
         [Op.between]: [new Date(start_date), new Date(end_date)]
@@ -101,7 +101,7 @@ exports.getInventoryMovements = async (req, res) => {
 
 exports.createAdjustment = async (req, res) => {
   const t = await sequelize.transaction();
-  
+
   try {
     const { product_id, adjustment_quantity, reason, remarks } = req.body;
 

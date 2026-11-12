@@ -6,15 +6,15 @@ const { Op } = require('sequelize');
 exports.getAllExpenses = async (req, res) => {
   try {
     const { start_date, end_date, category } = req.query;
-    
+
     const where = {};
-    
+
     if (start_date && end_date) {
       where.expense_date = {
         [Op.between]: [new Date(start_date), new Date(end_date)]
       };
     }
-    
+
     if (category) {
       where.category = category;
     }

@@ -5,21 +5,21 @@ const { Op } = require('sequelize');
 exports.getAllActivityLogs = async (req, res) => {
   try {
     const { user_id, module, action, start_date, end_date, limit = 100 } = req.query;
-    
+
     const where = {};
-    
+
     if (user_id) {
       where.user_id = user_id;
     }
-    
+
     if (module) {
       where.module = module;
     }
-    
+
     if (action) {
       where.action = action;
     }
-    
+
     if (start_date && end_date) {
       where.created_at = {
         [Op.between]: [new Date(start_date), new Date(end_date)]

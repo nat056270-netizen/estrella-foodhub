@@ -1,0 +1,1451 @@
+{
+  "name": "Estrella Foodhub supplied stall menu",
+  "version": 1,
+  "currency": "PHP",
+  "sections": [
+    {
+      "stall": "Takoyaki",
+      "name": "Takoyaki",
+      "items": [
+        {
+          "name": "Veggies (4pcs)",
+          "price": 45.0,
+          "unit": "pcs",
+          "sku": "MENU-TAK-31D4FBA9D88A"
+        },
+        {
+          "name": "Crabstick (4pcs)",
+          "price": 55.0,
+          "unit": "pcs",
+          "sku": "MENU-TAK-1CA2C3F08772"
+        },
+        {
+          "name": "Bacon & Cheese (4pcs)",
+          "price": 60.0,
+          "unit": "pcs",
+          "sku": "MENU-TAK-D6762B5857FD"
+        },
+        {
+          "name": "Octobits (4pcs)",
+          "price": 65.0,
+          "unit": "pcs",
+          "sku": "MENU-TAK-470E6D1252CA"
+        },
+        {
+          "name": "Cheese Bomb (4pcs)",
+          "price": 85.0,
+          "unit": "pcs",
+          "sku": "MENU-TAK-EC1845C630CE"
+        },
+        {
+          "name": "Takoyaki Promo (7pcs)",
+          "price": 50.0,
+          "unit": "pcs",
+          "sku": "MENU-TAK-2E2B75DC691D"
+        }
+      ]
+    },
+    {
+      "stall": "Takoyaki",
+      "name": "Take-Out Fee (Add-on)",
+      "items": [
+        {
+          "name": "Take-out Fee 4pcs",
+          "price": 5.0,
+          "unit": "add-on",
+          "sku": "MENU-TAK-D596674417D7"
+        },
+        {
+          "name": "Take-out Fee 6pcs",
+          "price": 8.0,
+          "unit": "add-on",
+          "sku": "MENU-TAK-68FA601AD570"
+        },
+        {
+          "name": "Take-out Fee 8pcs",
+          "price": 10.0,
+          "unit": "add-on",
+          "sku": "MENU-TAK-7C26E25FEA4C"
+        },
+        {
+          "name": "Take-out Fee 10–12pcs",
+          "price": 12.0,
+          "unit": "add-on",
+          "sku": "MENU-TAK-15EF0162A252"
+        },
+        {
+          "name": "Take-out Fee 15–20pcs",
+          "price": 20.0,
+          "unit": "add-on",
+          "sku": "MENU-TAK-B2F5990844A7"
+        }
+      ]
+    },
+    {
+      "stall": "Pizza",
+      "name": "10 Inches",
+      "items": [
+        {
+          "name": "Ultimate Hawaiian 10\"",
+          "price": 249.0,
+          "unit": "pcs",
+          "sku": "MENU-PIZ-DC5BA0FD4888"
+        },
+        {
+          "name": "6 Cheese 10\"",
+          "price": 279.0,
+          "unit": "pcs",
+          "sku": "MENU-PIZ-707235357902"
+        },
+        {
+          "name": "Triple Pepperoni 10\"",
+          "price": 249.0,
+          "unit": "pcs",
+          "sku": "MENU-PIZ-6BE14C0AEC0B"
+        },
+        {
+          "name": "Cheesy Ham & Bacon 10\"",
+          "price": 249.0,
+          "unit": "pcs",
+          "sku": "MENU-PIZ-9E0A2D4160F9"
+        },
+        {
+          "name": "Creamy Spinach 10\"",
+          "price": 329.0,
+          "unit": "pcs",
+          "sku": "MENU-PIZ-BC49DA726AE4"
+        },
+        {
+          "name": "Beef Supreme 10\"",
+          "price": 279.0,
+          "unit": "pcs",
+          "sku": "MENU-PIZ-CBA72B216643"
+        },
+        {
+          "name": "Chicken Alfredo 10\"",
+          "price": 299.0,
+          "unit": "pcs",
+          "sku": "MENU-PIZ-F9D33189B060"
+        }
+      ]
+    },
+    {
+      "stall": "Pizza",
+      "name": "6 Inches",
+      "items": [
+        {
+          "name": "5 Cheese 6\"",
+          "price": 139.0,
+          "unit": "pcs",
+          "sku": "MENU-PIZ-356BF20300DE"
+        },
+        {
+          "name": "Hawaiian 6\"",
+          "price": 139.0,
+          "unit": "pcs",
+          "sku": "MENU-PIZ-BB61AB61C986"
+        },
+        {
+          "name": "Creamy Spinach 6\"",
+          "price": 139.0,
+          "unit": "pcs",
+          "sku": "MENU-PIZ-74B4E1072F80"
+        },
+        {
+          "name": "Pepperoni 6\"",
+          "price": 139.0,
+          "unit": "pcs",
+          "sku": "MENU-PIZ-531340461AD6"
+        },
+        {
+          "name": "Beef Deluxe 6\"",
+          "price": 139.0,
+          "unit": "pcs",
+          "sku": "MENU-PIZ-88CFEE299BF2"
+        }
+      ]
+    },
+    {
+      "stall": "B&B",
+      "name": "Silog Meals",
+      "items": [
+        {
+          "name": "Tocino Silog",
+          "price": 99.0,
+          "unit": "pcs",
+          "sku": "MENU-BB-2DB2EE751756"
+        },
+        {
+          "name": "Tender Juicy Hotdog Silog",
+          "price": 75.0,
+          "unit": "pcs",
+          "sku": "MENU-BB-0B5F2BC62C06"
+        },
+        {
+          "name": "Spam Silog",
+          "price": 89.0,
+          "unit": "pcs",
+          "sku": "MENU-BB-AD46A83A716D"
+        },
+        {
+          "name": "Cornbeef Silog",
+          "price": 75.0,
+          "unit": "pcs",
+          "sku": "MENU-BB-059E7101C8CA"
+        },
+        {
+          "name": "Bacon Silog",
+          "price": 99.0,
+          "unit": "pcs",
+          "sku": "MENU-BB-CDE3B16CB038"
+        },
+        {
+          "name": "Shanghai Silog",
+          "price": 75.0,
+          "unit": "pcs",
+          "sku": "MENU-BB-68139EAFC6B9"
+        }
+      ]
+    },
+    {
+      "stall": "B&B",
+      "name": "Platters",
+      "items": [
+        {
+          "name": "Pork Sisig Platter",
+          "price": 205.0,
+          "unit": "pcs",
+          "sku": "MENU-BB-C96A5FF39870"
+        },
+        {
+          "name": "Hungarian Sausage Platter",
+          "price": 189.0,
+          "unit": "pcs",
+          "sku": "MENU-BB-ADA95A273C92"
+        },
+        {
+          "name": "Chicken Sisig Platter",
+          "price": 199.0,
+          "unit": "pcs",
+          "sku": "MENU-BB-E7C7F37A9EE0"
+        },
+        {
+          "name": "Tuna Sisig Platter",
+          "price": 189.0,
+          "unit": "pcs",
+          "sku": "MENU-BB-D7CE1D9654B1"
+        }
+      ]
+    },
+    {
+      "stall": "B&B",
+      "name": "Rice Bowls",
+      "items": [
+        {
+          "name": "Longganisa Rice Bowl",
+          "price": 69.0,
+          "unit": "pcs",
+          "sku": "MENU-BB-B62645988757"
+        },
+        {
+          "name": "Hamonada Rice Bowl",
+          "price": 79.0,
+          "unit": "pcs",
+          "sku": "MENU-BB-9FC893AB3068"
+        },
+        {
+          "name": "Pork Tocino Rice Bowl",
+          "price": 79.0,
+          "unit": "pcs",
+          "sku": "MENU-BB-EEBFDC665ED1"
+        },
+        {
+          "name": "Chicken Karaage Rice Bowl",
+          "price": 89.0,
+          "unit": "pcs",
+          "sku": "MENU-BB-5F289A5C983C"
+        }
+      ]
+    },
+    {
+      "stall": "B&B",
+      "name": "Sizzling Meals",
+      "items": [
+        {
+          "name": "Deep Fried Chicken",
+          "price": 139.0,
+          "unit": "pcs",
+          "sku": "MENU-BB-5CE3CFEE4DC3"
+        },
+        {
+          "name": "Beef Burger Steak",
+          "price": 119.0,
+          "unit": "pcs",
+          "sku": "MENU-BB-814AF69D1866"
+        },
+        {
+          "name": "Pork Sisig",
+          "price": 139.0,
+          "unit": "pcs",
+          "sku": "MENU-BB-288401823512"
+        },
+        {
+          "name": "Chicken Sisig",
+          "price": 129.0,
+          "unit": "pcs",
+          "sku": "MENU-BB-70721EA3230C"
+        },
+        {
+          "name": "Tuna Sisig",
+          "price": 119.0,
+          "unit": "pcs",
+          "sku": "MENU-BB-33A6944E8467"
+        },
+        {
+          "name": "Hungarian Sausage",
+          "price": 119.0,
+          "unit": "pcs",
+          "sku": "MENU-BB-FEE65C47DFEA"
+        },
+        {
+          "name": "Bangus",
+          "price": 129.0,
+          "unit": "pcs",
+          "sku": "MENU-BB-98059CBEE349"
+        },
+        {
+          "name": "Beef Tapa",
+          "price": 138.0,
+          "unit": "pcs",
+          "sku": "MENU-BB-5D2D835E3AED"
+        },
+        {
+          "name": "Porkchop",
+          "price": 139.0,
+          "unit": "pcs",
+          "sku": "MENU-BB-836F851EB695"
+        },
+        {
+          "name": "Liempo",
+          "price": 139.0,
+          "unit": "pcs",
+          "sku": "MENU-BB-F68BC75AAA59"
+        }
+      ]
+    },
+    {
+      "stall": "B&B",
+      "name": "Wednesday Sale (₱99)",
+      "items": [
+        {
+          "name": "Hungarian (Wed Sale)",
+          "price": 99.0,
+          "unit": "pcs",
+          "sku": "MENU-BB-091E9400DDF0"
+        },
+        {
+          "name": "Chicken Sisig (Wed Sale)",
+          "price": 99.0,
+          "unit": "pcs",
+          "sku": "MENU-BB-790ED938D38C"
+        },
+        {
+          "name": "Tuna Sisig (Wed Sale)",
+          "price": 99.0,
+          "unit": "pcs",
+          "sku": "MENU-BB-9F1768816370"
+        },
+        {
+          "name": "Beef Burger Steak (Wed Sale)",
+          "price": 99.0,
+          "unit": "pcs",
+          "sku": "MENU-BB-4C04EEDF6BA4"
+        }
+      ]
+    },
+    {
+      "stall": "B&B",
+      "name": "Buy 1 Get 1 Sandwiches",
+      "items": [
+        {
+          "name": "Classic Burger Buy 1 Get 1",
+          "price": 50.0,
+          "unit": "set",
+          "sku": "MENU-BB-1DD0A4C11183"
+        },
+        {
+          "name": "Classic Burger Solo",
+          "price": 30.0,
+          "unit": "pcs",
+          "sku": "MENU-BB-84C81BC5FA10"
+        },
+        {
+          "name": "Cheese Burger Buy 1 Get 1",
+          "price": 70.0,
+          "unit": "set",
+          "sku": "MENU-BB-59973807514F"
+        },
+        {
+          "name": "Cheese Burger Solo",
+          "price": 40.0,
+          "unit": "pcs",
+          "sku": "MENU-BB-0AD8DC3091A6"
+        },
+        {
+          "name": "Egg Sandwich Buy 1 Get 1",
+          "price": 50.0,
+          "unit": "set",
+          "sku": "MENU-BB-AA4F2B05FE98"
+        },
+        {
+          "name": "Egg Sandwich Solo",
+          "price": 30.0,
+          "unit": "pcs",
+          "sku": "MENU-BB-C9B5C33B5786"
+        },
+        {
+          "name": "Ham Sandwich Buy 1 Get 1",
+          "price": 79.0,
+          "unit": "set",
+          "sku": "MENU-BB-C0AB0B86C886"
+        },
+        {
+          "name": "Ham Sandwich Solo",
+          "price": 45.0,
+          "unit": "pcs",
+          "sku": "MENU-BB-78CE3A954D2E"
+        },
+        {
+          "name": "Ham & Cheese Buy 1 Get 1",
+          "price": 89.0,
+          "unit": "set",
+          "sku": "MENU-BB-2AAD51C3272F"
+        },
+        {
+          "name": "Ham & Cheese Solo",
+          "price": 50.0,
+          "unit": "pcs",
+          "sku": "MENU-BB-9E11FE3AEEA0"
+        },
+        {
+          "name": "Ham & Egg Buy 1 Get 1",
+          "price": 99.0,
+          "unit": "set",
+          "sku": "MENU-BB-B92F83FF653F"
+        },
+        {
+          "name": "Ham & Egg Solo",
+          "price": 55.0,
+          "unit": "pcs",
+          "sku": "MENU-BB-FA54A4B8697B"
+        },
+        {
+          "name": "Overloaded Footlong Sandwich",
+          "price": 75.0,
+          "unit": "pcs",
+          "sku": "MENU-BB-934F7148E066"
+        }
+      ]
+    },
+    {
+      "stall": "B&B",
+      "name": "Footlong Add-ons",
+      "items": [
+        {
+          "name": "Add Egg",
+          "price": 15.0,
+          "unit": "add-on",
+          "sku": "MENU-BB-838962814280"
+        },
+        {
+          "name": "Add Patty",
+          "price": 10.0,
+          "unit": "add-on",
+          "sku": "MENU-BB-C6F5EBC74DE3"
+        },
+        {
+          "name": "Add Footlong",
+          "price": 15.0,
+          "unit": "add-on",
+          "sku": "MENU-BB-D304BDCF65DF"
+        },
+        {
+          "name": "Add Cheese",
+          "price": 15.0,
+          "unit": "add-on",
+          "sku": "MENU-BB-FEDFD08ED494"
+        }
+      ]
+    },
+    {
+      "stall": "B&B",
+      "name": "Fries",
+      "items": [
+        {
+          "name": "Fries Small - Plain",
+          "price": 49.0,
+          "flavor": "Plain",
+          "unit": "portion",
+          "sku": "MENU-BB-08FE185086B0"
+        },
+        {
+          "name": "Fries Small - Cheese",
+          "price": 49.0,
+          "flavor": "Cheese",
+          "unit": "portion",
+          "sku": "MENU-BB-221464E4BCE0"
+        },
+        {
+          "name": "Fries Small - BBQ",
+          "price": 49.0,
+          "flavor": "BBQ",
+          "unit": "portion",
+          "sku": "MENU-BB-A6E55036F127"
+        },
+        {
+          "name": "Fries Small - Sour Cream",
+          "price": 49.0,
+          "flavor": "Sour Cream",
+          "unit": "portion",
+          "sku": "MENU-BB-0B1005DE475F"
+        },
+        {
+          "name": "Fries Small - Chili BBQ",
+          "price": 49.0,
+          "flavor": "Chili BBQ",
+          "unit": "portion",
+          "sku": "MENU-BB-B5AAB5748151"
+        },
+        {
+          "name": "Fries Medium - Plain",
+          "price": 69.0,
+          "flavor": "Plain",
+          "unit": "portion",
+          "sku": "MENU-BB-92FB3CACDA38"
+        },
+        {
+          "name": "Fries Medium - Cheese",
+          "price": 69.0,
+          "flavor": "Cheese",
+          "unit": "portion",
+          "sku": "MENU-BB-CEC0BBBCAFCD"
+        },
+        {
+          "name": "Fries Medium - BBQ",
+          "price": 69.0,
+          "flavor": "BBQ",
+          "unit": "portion",
+          "sku": "MENU-BB-A4A0FEAF6298"
+        },
+        {
+          "name": "Fries Medium - Sour Cream",
+          "price": 69.0,
+          "flavor": "Sour Cream",
+          "unit": "portion",
+          "sku": "MENU-BB-C2D8A0CDCAAE"
+        },
+        {
+          "name": "Fries Medium - Chili BBQ",
+          "price": 69.0,
+          "flavor": "Chili BBQ",
+          "unit": "portion",
+          "sku": "MENU-BB-B659E507EB84"
+        },
+        {
+          "name": "Fries Large - Plain",
+          "price": 89.0,
+          "flavor": "Plain",
+          "unit": "portion",
+          "sku": "MENU-BB-04B5B581B6F4"
+        },
+        {
+          "name": "Fries Large - Cheese",
+          "price": 89.0,
+          "flavor": "Cheese",
+          "unit": "portion",
+          "sku": "MENU-BB-FA262B477350"
+        },
+        {
+          "name": "Fries Large - BBQ",
+          "price": 89.0,
+          "flavor": "BBQ",
+          "unit": "portion",
+          "sku": "MENU-BB-B19669BADD11"
+        },
+        {
+          "name": "Fries Large - Sour Cream",
+          "price": 89.0,
+          "flavor": "Sour Cream",
+          "unit": "portion",
+          "sku": "MENU-BB-364EB3EB3386"
+        },
+        {
+          "name": "Fries Large - Chili BBQ",
+          "price": 89.0,
+          "flavor": "Chili BBQ",
+          "unit": "portion",
+          "sku": "MENU-BB-35DCC945ABA6"
+        },
+        {
+          "name": "Bucket of Fries - Plain",
+          "price": 139.0,
+          "flavor": "Plain",
+          "unit": "portion",
+          "sku": "MENU-BB-F9E66349C2B2"
+        },
+        {
+          "name": "Bucket of Fries - Cheese",
+          "price": 139.0,
+          "flavor": "Cheese",
+          "unit": "portion",
+          "sku": "MENU-BB-DAE982E6A8B9"
+        },
+        {
+          "name": "Bucket of Fries - BBQ",
+          "price": 139.0,
+          "flavor": "BBQ",
+          "unit": "portion",
+          "sku": "MENU-BB-A35AF98336CD"
+        },
+        {
+          "name": "Bucket of Fries - Sour Cream",
+          "price": 139.0,
+          "flavor": "Sour Cream",
+          "unit": "portion",
+          "sku": "MENU-BB-F474B891049B"
+        },
+        {
+          "name": "Bucket of Fries - Chili BBQ",
+          "price": 139.0,
+          "flavor": "Chili BBQ",
+          "unit": "portion",
+          "sku": "MENU-BB-5A531E83E555"
+        }
+      ]
+    },
+    {
+      "stall": "Shawarma",
+      "name": "Shawarma Solo",
+      "items": [
+        {
+          "name": "Chicken Shawarma Wrap Solo",
+          "price": 69.0,
+          "unit": "pcs",
+          "sku": "MENU-SHA-5397653BAF3A"
+        },
+        {
+          "name": "Beef Shawarma Wrap Solo",
+          "price": 79.0,
+          "unit": "pcs",
+          "sku": "MENU-SHA-FAC4A69CC13C"
+        },
+        {
+          "name": "Shawarma Wrap All Meat",
+          "price": 89.0,
+          "unit": "pcs",
+          "sku": "MENU-SHA-9BA15498F28B"
+        }
+      ]
+    },
+    {
+      "stall": "Shawarma",
+      "name": "Shawarma Buy 1 Take 1",
+      "items": [
+        {
+          "name": "Chicken Buy 1 Take 1",
+          "price": 129.0,
+          "unit": "set",
+          "sku": "MENU-SHA-3A1795A65C14"
+        },
+        {
+          "name": "Beef Buy 1 Take 1",
+          "price": 139.0,
+          "unit": "set",
+          "sku": "MENU-SHA-1020F7358238"
+        }
+      ]
+    },
+    {
+      "stall": "Shawarma",
+      "name": "Shawarma Rice",
+      "items": [
+        {
+          "name": "Chicken Shawarma Rice",
+          "price": 99.0,
+          "unit": "pcs",
+          "sku": "MENU-SHA-0C82921643F7"
+        },
+        {
+          "name": "Beef Shawarma Rice",
+          "price": 109.0,
+          "unit": "pcs",
+          "sku": "MENU-SHA-0F31D625C4DC"
+        },
+        {
+          "name": "All Meat Shawarma Rice",
+          "price": 109.0,
+          "unit": "pcs",
+          "sku": "MENU-SHA-07B089054A89"
+        }
+      ]
+    },
+    {
+      "stall": "Shawarma",
+      "name": "Snacks",
+      "items": [
+        {
+          "name": "Cheesy Beef Quesadilla",
+          "price": 149.0,
+          "unit": "pcs",
+          "sku": "MENU-SHA-BE6D908D5843"
+        },
+        {
+          "name": "Cheesy Beef Tacos",
+          "price": 149.0,
+          "unit": "pcs",
+          "sku": "MENU-SHA-8E4C975B458F"
+        },
+        {
+          "name": "Soft Mini Tacos",
+          "price": 149.0,
+          "unit": "pcs",
+          "sku": "MENU-SHA-BB3AEA3AAA5D"
+        },
+        {
+          "name": "Shawarma Fries",
+          "price": 119.0,
+          "unit": "pcs",
+          "sku": "MENU-SHA-7993AA795498"
+        },
+        {
+          "name": "Overloaded Nachos",
+          "price": 149.0,
+          "unit": "pcs",
+          "sku": "MENU-SHA-B13C641D57A0"
+        },
+        {
+          "name": "Shawarma Burger Solo",
+          "price": 79.0,
+          "unit": "pcs",
+          "sku": "MENU-SHA-65A1B70A177A"
+        },
+        {
+          "name": "Shawarma Burger Buy 1 Take 1",
+          "price": 139.0,
+          "unit": "set",
+          "sku": "MENU-SHA-3C8C0C2AEDD9"
+        }
+      ]
+    },
+    {
+      "stall": "Fried Noodles",
+      "name": "Fried Noodles",
+      "items": [
+        {
+          "name": "Plain Noodles",
+          "price": 39.0,
+          "unit": "pcs",
+          "sku": "MENU-NOO-95C12B9806C0"
+        },
+        {
+          "name": "Buy 1 Take 1 Noodles",
+          "price": 60.0,
+          "unit": "set",
+          "sku": "MENU-NOO-8ECB9BFAC580"
+        },
+        {
+          "name": "With JPS Siomai",
+          "price": 49.0,
+          "unit": "pcs",
+          "sku": "MENU-NOO-75D54AADA34D"
+        },
+        {
+          "name": "With Beef Siomai",
+          "price": 49.0,
+          "unit": "pcs",
+          "sku": "MENU-NOO-E300D53A6FE4"
+        },
+        {
+          "name": "With Pork Siomai",
+          "price": 49.0,
+          "unit": "pcs",
+          "sku": "MENU-NOO-0927A8C17188"
+        },
+        {
+          "name": "With Chicken Siomai",
+          "price": 49.0,
+          "unit": "pcs",
+          "sku": "MENU-NOO-28B77E15A098"
+        },
+        {
+          "name": "With Pork & Shrimp Siomai",
+          "price": 49.0,
+          "unit": "pcs",
+          "sku": "MENU-NOO-4A4681301D90"
+        },
+        {
+          "name": "With Egg",
+          "price": 49.0,
+          "unit": "pcs",
+          "sku": "MENU-NOO-D06B1E5C01D6"
+        },
+        {
+          "name": "With Wanton",
+          "price": 49.0,
+          "unit": "pcs",
+          "sku": "MENU-NOO-C3F44A301831"
+        }
+      ]
+    },
+    {
+      "stall": "Fried Noodles",
+      "name": "Additional Toppings",
+      "items": [
+        {
+          "name": "Beef Siomai",
+          "price": 6.0,
+          "unit": "add-on",
+          "sku": "MENU-NOO-C6F3030BC393"
+        },
+        {
+          "name": "Pork Siomai",
+          "price": 6.0,
+          "unit": "add-on",
+          "sku": "MENU-NOO-D65B16D24521"
+        },
+        {
+          "name": "Chicken Siomai",
+          "price": 6.0,
+          "unit": "add-on",
+          "sku": "MENU-NOO-63B0FCB14614"
+        },
+        {
+          "name": "Pork & Shrimp",
+          "price": 6.0,
+          "unit": "add-on",
+          "sku": "MENU-NOO-153C5D51769F"
+        },
+        {
+          "name": "Wanton",
+          "price": 6.0,
+          "unit": "add-on",
+          "sku": "MENU-NOO-44CAFD2AAFBA"
+        },
+        {
+          "name": "Sharksfin",
+          "price": 6.0,
+          "unit": "add-on",
+          "sku": "MENU-NOO-B21024218D26"
+        },
+        {
+          "name": "JPS Siomai",
+          "price": 8.0,
+          "unit": "add-on",
+          "sku": "MENU-NOO-AA2838B6121B"
+        },
+        {
+          "name": "Egg",
+          "price": 15.0,
+          "unit": "add-on",
+          "sku": "MENU-NOO-9F043C9496BB"
+        }
+      ]
+    },
+    {
+      "stall": "Pawsome",
+      "name": "Milktea Series",
+      "items": [
+        {
+          "name": "Classic Milktea (Regular)",
+          "price": 75.0,
+          "size": "Regular",
+          "unit": "cup",
+          "sku": "MENU-PAW-552A77758C54"
+        },
+        {
+          "name": "Classic Milktea (Large)",
+          "price": 85.0,
+          "size": "Large",
+          "unit": "cup",
+          "sku": "MENU-PAW-88298B969C03"
+        },
+        {
+          "name": "Salted Caramel (Regular)",
+          "price": 75.0,
+          "size": "Regular",
+          "unit": "cup",
+          "sku": "MENU-PAW-621482C0F3B4"
+        },
+        {
+          "name": "Salted Caramel (Large)",
+          "price": 85.0,
+          "size": "Large",
+          "unit": "cup",
+          "sku": "MENU-PAW-B4447271D66B"
+        },
+        {
+          "name": "Cookies & Cream (Regular)",
+          "price": 75.0,
+          "size": "Regular",
+          "unit": "cup",
+          "sku": "MENU-PAW-669AA46B9BCD"
+        },
+        {
+          "name": "Cookies & Cream (Large)",
+          "price": 85.0,
+          "size": "Large",
+          "unit": "cup",
+          "sku": "MENU-PAW-940B002F9DBD"
+        },
+        {
+          "name": "Vanilla (Regular)",
+          "price": 75.0,
+          "size": "Regular",
+          "unit": "cup",
+          "sku": "MENU-PAW-D7224118CDB5"
+        },
+        {
+          "name": "Vanilla (Large)",
+          "price": 85.0,
+          "size": "Large",
+          "unit": "cup",
+          "sku": "MENU-PAW-599ECABEFD63"
+        },
+        {
+          "name": "Mocha (Regular)",
+          "price": 75.0,
+          "size": "Regular",
+          "unit": "cup",
+          "sku": "MENU-PAW-D5780BF866D5"
+        },
+        {
+          "name": "Mocha (Large)",
+          "price": 85.0,
+          "size": "Large",
+          "unit": "cup",
+          "sku": "MENU-PAW-88DCC998A2B2"
+        }
+      ]
+    },
+    {
+      "stall": "Pawsome",
+      "name": "Premium Milktea Series",
+      "items": [
+        {
+          "name": "Hokkaido (Regular)",
+          "price": 79.0,
+          "size": "Regular",
+          "unit": "cup",
+          "sku": "MENU-PAW-9DA1ACB7D416"
+        },
+        {
+          "name": "Hokkaido (Large)",
+          "price": 89.0,
+          "size": "Large",
+          "unit": "cup",
+          "sku": "MENU-PAW-E9BF82C2FBAD"
+        },
+        {
+          "name": "Wintermelon (Regular)",
+          "price": 79.0,
+          "size": "Regular",
+          "unit": "cup",
+          "sku": "MENU-PAW-965CADFCA3C4"
+        },
+        {
+          "name": "Wintermelon (Large)",
+          "price": 89.0,
+          "size": "Large",
+          "unit": "cup",
+          "sku": "MENU-PAW-91B83BF9B985"
+        },
+        {
+          "name": "Okinawa (Regular)",
+          "price": 79.0,
+          "size": "Regular",
+          "unit": "cup",
+          "sku": "MENU-PAW-64C1418B31F8"
+        },
+        {
+          "name": "Okinawa (Large)",
+          "price": 89.0,
+          "size": "Large",
+          "unit": "cup",
+          "sku": "MENU-PAW-E6510A60D62B"
+        },
+        {
+          "name": "Strawberry Milktea (Regular)",
+          "price": 79.0,
+          "size": "Regular",
+          "unit": "cup",
+          "sku": "MENU-PAW-17878DD2470F"
+        },
+        {
+          "name": "Strawberry Milktea (Large)",
+          "price": 89.0,
+          "size": "Large",
+          "unit": "cup",
+          "sku": "MENU-PAW-015890D2A0B0"
+        },
+        {
+          "name": "Taro (Regular)",
+          "price": 79.0,
+          "size": "Regular",
+          "unit": "cup",
+          "sku": "MENU-PAW-D886C2F372FB"
+        },
+        {
+          "name": "Taro (Large)",
+          "price": 89.0,
+          "size": "Large",
+          "unit": "cup",
+          "sku": "MENU-PAW-5E26BDB1486F"
+        },
+        {
+          "name": "Matcha (Regular)",
+          "price": 79.0,
+          "size": "Regular",
+          "unit": "cup",
+          "sku": "MENU-PAW-5255ABC24656"
+        },
+        {
+          "name": "Matcha (Large)",
+          "price": 89.0,
+          "size": "Large",
+          "unit": "cup",
+          "sku": "MENU-PAW-891AADE77435"
+        }
+      ]
+    },
+    {
+      "stall": "Pawsome",
+      "name": "Chocolate Series",
+      "items": [
+        {
+          "name": "Chocolate (Regular)",
+          "price": 75.0,
+          "size": "Regular",
+          "unit": "cup",
+          "sku": "MENU-PAW-DB069F75BFF5"
+        },
+        {
+          "name": "Chocolate (Large)",
+          "price": 85.0,
+          "size": "Large",
+          "unit": "cup",
+          "sku": "MENU-PAW-B21EBE08348C"
+        },
+        {
+          "name": "Dark Chocolate (Regular)",
+          "price": 75.0,
+          "size": "Regular",
+          "unit": "cup",
+          "sku": "MENU-PAW-5F03B5276E15"
+        },
+        {
+          "name": "Dark Chocolate (Large)",
+          "price": 85.0,
+          "size": "Large",
+          "unit": "cup",
+          "sku": "MENU-PAW-C445EEFFE68B"
+        },
+        {
+          "name": "Java Chip (Regular)",
+          "price": 75.0,
+          "size": "Regular",
+          "unit": "cup",
+          "sku": "MENU-PAW-F74D86F2491E"
+        },
+        {
+          "name": "Java Chip (Large)",
+          "price": 85.0,
+          "size": "Large",
+          "unit": "cup",
+          "sku": "MENU-PAW-C2C46A80A842"
+        },
+        {
+          "name": "Very Rocky Road (Regular)",
+          "price": 75.0,
+          "size": "Regular",
+          "unit": "cup",
+          "sku": "MENU-PAW-655FCCF1708D"
+        },
+        {
+          "name": "Very Rocky Road (Large)",
+          "price": 85.0,
+          "size": "Large",
+          "unit": "cup",
+          "sku": "MENU-PAW-C1BC2427DE0A"
+        }
+      ]
+    },
+    {
+      "stall": "Pawsome",
+      "name": "Cream Cheese Series",
+      "items": [
+        {
+          "name": "Strawberry Cheesecake Madness (Regular)",
+          "price": 89.0,
+          "size": "Regular",
+          "unit": "cup",
+          "sku": "MENU-PAW-B7A3DCE67562"
+        },
+        {
+          "name": "Strawberry Cheesecake Madness (Large)",
+          "price": 99.0,
+          "size": "Large",
+          "unit": "cup",
+          "sku": "MENU-PAW-86EC79AE3F35"
+        },
+        {
+          "name": "Choco Nutella Cream Cheese (Regular)",
+          "price": 89.0,
+          "size": "Regular",
+          "unit": "cup",
+          "sku": "MENU-PAW-FE2D971444B1"
+        },
+        {
+          "name": "Choco Nutella Cream Cheese (Large)",
+          "price": 99.0,
+          "size": "Large",
+          "unit": "cup",
+          "sku": "MENU-PAW-822C49875F77"
+        },
+        {
+          "name": "Cream Cheese Taro Special (Regular)",
+          "price": 89.0,
+          "size": "Regular",
+          "unit": "cup",
+          "sku": "MENU-PAW-764D13CC5F5F"
+        },
+        {
+          "name": "Cream Cheese Taro Special (Large)",
+          "price": 99.0,
+          "size": "Large",
+          "unit": "cup",
+          "sku": "MENU-PAW-211FAA0FE7D2"
+        },
+        {
+          "name": "Foamy Matcha Cream Cheese (Regular)",
+          "price": 89.0,
+          "size": "Regular",
+          "unit": "cup",
+          "sku": "MENU-PAW-366E6902E544"
+        },
+        {
+          "name": "Foamy Matcha Cream Cheese (Large)",
+          "price": 99.0,
+          "size": "Large",
+          "unit": "cup",
+          "sku": "MENU-PAW-C0B4B131D7CD"
+        },
+        {
+          "name": "Wintermelon Cheesecake Overload (Regular)",
+          "price": 89.0,
+          "size": "Regular",
+          "unit": "cup",
+          "sku": "MENU-PAW-38BDEB3A01E8"
+        },
+        {
+          "name": "Wintermelon Cheesecake Overload (Large)",
+          "price": 99.0,
+          "size": "Large",
+          "unit": "cup",
+          "sku": "MENU-PAW-65C9812596CF"
+        },
+        {
+          "name": "Cream Cheese Oreo Cookies (Regular)",
+          "price": 89.0,
+          "size": "Regular",
+          "unit": "cup",
+          "sku": "MENU-PAW-9E1DE8C558BB"
+        },
+        {
+          "name": "Cream Cheese Oreo Cookies (Large)",
+          "price": 99.0,
+          "size": "Large",
+          "unit": "cup",
+          "sku": "MENU-PAW-C44BF4B39A02"
+        }
+      ]
+    },
+    {
+      "stall": "Pawsome",
+      "name": "Fruit Tea",
+      "items": [
+        {
+          "name": "Strawberry Fruit Tea (Regular)",
+          "price": 70.0,
+          "size": "Regular",
+          "unit": "cup",
+          "sku": "MENU-PAW-F1B79722EACA"
+        },
+        {
+          "name": "Strawberry Fruit Tea (Large)",
+          "price": 80.0,
+          "size": "Large",
+          "unit": "cup",
+          "sku": "MENU-PAW-C487654233FE"
+        },
+        {
+          "name": "Wintermelon Fruit Tea (Regular)",
+          "price": 70.0,
+          "size": "Regular",
+          "unit": "cup",
+          "sku": "MENU-PAW-E23B2E863244"
+        },
+        {
+          "name": "Wintermelon Fruit Tea (Large)",
+          "price": 80.0,
+          "size": "Large",
+          "unit": "cup",
+          "sku": "MENU-PAW-34EC3D109D0C"
+        },
+        {
+          "name": "Blueberry Fruit Tea (Regular)",
+          "price": 70.0,
+          "size": "Regular",
+          "unit": "cup",
+          "sku": "MENU-PAW-105EC53E5E9C"
+        },
+        {
+          "name": "Blueberry Fruit Tea (Large)",
+          "price": 80.0,
+          "size": "Large",
+          "unit": "cup",
+          "sku": "MENU-PAW-0D218A62811F"
+        },
+        {
+          "name": "Passion Fruit Tea (Regular)",
+          "price": 70.0,
+          "size": "Regular",
+          "unit": "cup",
+          "sku": "MENU-PAW-C66F68AEA5C7"
+        },
+        {
+          "name": "Passion Fruit Tea (Large)",
+          "price": 80.0,
+          "size": "Large",
+          "unit": "cup",
+          "sku": "MENU-PAW-8EB529D3EDBD"
+        }
+      ]
+    },
+    {
+      "stall": "Pawsome",
+      "name": "Add-ons",
+      "items": [
+        {
+          "name": "Pearl",
+          "price": 10.0,
+          "unit": "add-on",
+          "sku": "MENU-PAW-AC39802F14A9"
+        },
+        {
+          "name": "Nutella",
+          "price": 20.0,
+          "unit": "add-on",
+          "sku": "MENU-PAW-2DC1191539C5"
+        },
+        {
+          "name": "Nata",
+          "price": 10.0,
+          "unit": "add-on",
+          "sku": "MENU-PAW-6C6F849E2B39"
+        },
+        {
+          "name": "Mix Jelly",
+          "price": 15.0,
+          "unit": "add-on",
+          "sku": "MENU-PAW-6D86821DEEC2"
+        },
+        {
+          "name": "Coffee Jelly",
+          "price": 15.0,
+          "unit": "add-on",
+          "sku": "MENU-PAW-86CB71575177"
+        }
+      ]
+    },
+    {
+      "stall": "Pawsome",
+      "name": "Pawsome Snacks",
+      "items": [
+        {
+          "name": "Mozzarella Stick",
+          "price": 79.0,
+          "unit": "pcs",
+          "sku": "MENU-PAW-A26A2782FB52"
+        },
+        {
+          "name": "Twister Fries",
+          "price": 89.0,
+          "unit": "pcs",
+          "sku": "MENU-PAW-D15C4DD6BBE1"
+        },
+        {
+          "name": "Crizzcut Fries",
+          "price": 89.0,
+          "unit": "pcs",
+          "sku": "MENU-PAW-EE7A0B29B3A2"
+        },
+        {
+          "name": "Churros",
+          "price": 89.0,
+          "unit": "pcs",
+          "sku": "MENU-PAW-FE4992F01D16"
+        },
+        {
+          "name": "Mojos",
+          "price": 89.0,
+          "unit": "pcs",
+          "sku": "MENU-PAW-F2C31221BCCA"
+        },
+        {
+          "name": "Cordon Bleu & Fries",
+          "price": 89.0,
+          "unit": "pcs",
+          "sku": "MENU-PAW-6A75E18D1FF9"
+        },
+        {
+          "name": "Nuggets & Fries",
+          "price": 99.0,
+          "unit": "pcs",
+          "sku": "MENU-PAW-1F4A078E7F0A"
+        },
+        {
+          "name": "Crispy Fried Calamari",
+          "price": 99.0,
+          "unit": "pcs",
+          "sku": "MENU-PAW-7E0C25CE3F3A"
+        },
+        {
+          "name": "Plain Fries",
+          "price": 69.0,
+          "unit": "pcs",
+          "sku": "MENU-PAW-0A9E175FE7C5"
+        },
+        {
+          "name": "Cheesy Fries",
+          "price": 89.0,
+          "unit": "pcs",
+          "sku": "MENU-PAW-EC38BDF2F8A9"
+        },
+        {
+          "name": "Overloaded Fries",
+          "price": 99.0,
+          "unit": "pcs",
+          "sku": "MENU-PAW-F2CED60BBA82"
+        }
+      ]
+    },
+    {
+      "stall": "Pawsome",
+      "name": "Pawsome Sandwich",
+      "items": [
+        {
+          "name": "Hungarian Sandwich",
+          "price": 139.0,
+          "unit": "pcs",
+          "sku": "MENU-PAW-438E6FA90FFE"
+        },
+        {
+          "name": "Pork Katsu Burger",
+          "price": 139.0,
+          "unit": "pcs",
+          "sku": "MENU-PAW-DEA23AAFFED2"
+        },
+        {
+          "name": "Crispy Chicken Sandwich",
+          "price": 159.0,
+          "unit": "pcs",
+          "sku": "MENU-PAW-348852B34C67"
+        },
+        {
+          "name": "Jalapeno Cheese Burger",
+          "price": 159.0,
+          "unit": "pcs",
+          "sku": "MENU-PAW-00670A6EFDE7"
+        },
+        {
+          "name": "Tempura with Rice",
+          "price": 139.0,
+          "unit": "pcs",
+          "sku": "MENU-PAW-09664E815B22"
+        },
+        {
+          "name": "Ebi Tempura",
+          "price": 139.0,
+          "unit": "pcs",
+          "sku": "MENU-PAW-3876D5F7C801"
+        },
+        {
+          "name": "Tempura & Gyoza",
+          "price": 149.0,
+          "unit": "pcs",
+          "sku": "MENU-PAW-A85794DEAFBA"
+        }
+      ]
+    },
+    {
+      "stall": "Pawsome",
+      "name": "Group Meal Combos",
+      "items": [
+        {
+          "name": "Combo 1",
+          "price": 399.0,
+          "unit": "set",
+          "sku": "MENU-PAW-7E0A38DE1C69"
+        },
+        {
+          "name": "Combo 2",
+          "price": 499.0,
+          "unit": "set",
+          "sku": "MENU-PAW-259498F16AD4"
+        },
+        {
+          "name": "Family of 6",
+          "price": 699.0,
+          "unit": "set",
+          "sku": "MENU-PAW-445DC11E52EB"
+        },
+        {
+          "name": "Barkada Bundle",
+          "price": 899.0,
+          "unit": "set",
+          "sku": "MENU-PAW-250F03203796"
+        }
+      ]
+    },
+    {
+      "stall": "Pawsome",
+      "name": "Couple Meal Ideas",
+      "items": [
+        {
+          "name": "Kahit Ano",
+          "price": 299.0,
+          "unit": "pcs",
+          "sku": "MENU-PAW-55F72C2ED37A"
+        },
+        {
+          "name": "Ikaw ang Bahala",
+          "price": 299.0,
+          "unit": "pcs",
+          "sku": "MENU-PAW-13F0C93B8983"
+        },
+        {
+          "name": "Miski Ilan",
+          "price": 299.0,
+          "unit": "pcs",
+          "sku": "MENU-PAW-0674E897BF65"
+        },
+        {
+          "name": "Yung Ano",
+          "price": 299.0,
+          "unit": "pcs",
+          "sku": "MENU-PAW-B615C8D19BC5"
+        }
+      ]
+    }
+  ]
+}

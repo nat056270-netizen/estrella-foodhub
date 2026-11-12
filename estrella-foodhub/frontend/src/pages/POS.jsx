@@ -1,496 +1,211 @@
-import { useState, useEffect } from 'react';
+import { useEffect, useRef, useState } from 'react';
+import { Link } from 'react-router-dom';
 import api from '../services/api';
 import { toast } from 'react-toastify';
+import { categoryParts, menuStalls, matchesMenu } from '../utils/menu';
+import { useAuth } from '../context/AuthContext';
 import { formatCurrency } from '../utils/format';
-import { Search, Plus, Minus, Trash2, ShoppingCart, X, Printer } from 'lucide-react';
+import { cartSubtotal, cashChange, canSell, addProduct, changeCartQuantity, checkoutError, salePayload } from '../utils/cart';
+import { Search, Plus, Minus, Trash2, ShoppingCart, Printer, UtensilsCrossed, Banknote, CreditCard, Smartphone, Wallet, CheckCircle2, Loader2, ArrowRight } from 'lucide-react';
 import Loading from '../components/Loading';
 import Modal from '../components/Modal';
-import { useAuth } from '../context/AuthContext';
-
-const POS = () => {
-  const { user } = useAuth();
+import ConfirmDialog from '../components/ConfirmDialog';
+import Receipt from '../components/Receipt';
+import CartItems from '../components/CartItems';
+import { ErrorState, EmptyState } from '../components/AsyncState';
+const paymentMethods = [{
+  id: 'cash',
+  label: 'Cash',
+  icon: Banknote
+}, {
+  id: 'gcash',
+  label: 'GCash',
+  icon: Smartphone
+}, {
+  id: 'card',
+  label: 'Card',
+  icon: CreditCard
+}, {
+  id: 'other',
+  label: 'Other',
+  icon: Wallet
+}];
+const pendingKey = 'estrella-pending-sale';
+export default function POS() {
+  const { hasRole } = useAuth();
+  const [compact, setCompact] = useState(() => window.innerWidth < 1100);
+  const [layoutNode, setLayoutNode] = useState(null);
+  const [cartOpen, setCartOpen] = useState(false);
+  useEffect(() => {
+    if (!layoutNode) return;
+    const update = () => setCompact(layoutNode.clientWidth < 850);
+    update();
+    const observer = new ResizeObserver(update);
+    observer.observe(layoutNode);
+    return () => observer.disconnect();
+  }, [layoutNode]);
+  useEffect(() => { if (!compact) setCartOpen(false); }, [compact]);
+  const [selectedStall, setSelectedStall] = useState('');
   const [products, setProducts] = useState([]);
   const [categories, setCategories] = useState([]);
   const [customers, setCustomers] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState('');
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('');
   const [cart, setCart] = useState([]);
-  const [selectedCustomer, setSelectedCustomer] = useState(null);
+  const [customerId, setCustomerId] = useState('');
   const [paymentMethod, setPaymentMethod] = useState('cash');
   const [amountReceived, setAmountReceived] = useState('');
-  const [showReceipt, setShowReceipt] = useState(false);
-  const [receiptData, setReceiptData] = useState(null);
+  const [receipt, setReceipt] = useState(null);
   const [processing, setProcessing] = useState(false);
-
-  useEffect(() => {
-    fetchData();
-  }, []);
-
+  const [clearConfirm, setClearConfirm] = useState(false);
+  const [uncertain, setUncertain] = useState(() => !!sessionStorage.getItem(pendingKey));
+  const [reviewConfirm, setReviewConfirm] = useState(false);
+  const [stockStale, setStockStale] = useState(false);
+  const checkoutLock = useRef(false);
   const fetchData = async () => {
+    setLoading(true);
+    setError('');
     try {
-      const [productsRes, categoriesRes, customersRes] = await Promise.all([
-        api.get('/products?status=active'),
-        api.get('/categories?status=active'),
-        api.get('/customers?status=active')
-      ]);
-
-      setProducts(productsRes.data.data);
-      setCategories(categoriesRes.data.data);
-      setCustomers(customersRes.data.data);
-    } catch (error) {
-      toast.error('Failed to load data');
+      const [p, c, u] = await Promise.all([api.get('/products?status=active'), api.get('/categories?status=active'), api.get('/customers?status=active')]);
+      setProducts(p.data.data);
+      setCategories(c.data.data.filter(category => category.status === 'active'));
+      setCustomers(u.data.data);
+      setStockStale(false);
+    } catch (err) {
+      setError(err.response?.data?.message || 'Couldn’t load the counter. Check your connection and try again.');
     } finally {
       setLoading(false);
     }
   };
-
-  const filteredProducts = products.filter(product => {
-    const matchesSearch = product.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                         product.sku.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                         product.barcode?.toLowerCase().includes(searchTerm.toLowerCase());
-    const matchesCategory = !selectedCategory || product.category_id === parseInt(selectedCategory);
-    return matchesSearch && matchesCategory;
-  });
-
-  const addToCart = (product) => {
-    if (product.current_stock <= 0) {
-      toast.error('Product is out of stock');
+  useEffect(() => {
+    fetchData();
+  }, []);
+  const refreshStock = async ({ saleSaved = false } = {}) => {
+    try {
+      const response = await api.get('/products?status=active');
+      setProducts(response.data.data);
+      setStockStale(false);
+    } catch {
+      setStockStale(true);
+      toast.warning(saleSaved ? 'Sale saved. Refresh stock before starting another sale.' : 'Could not refresh stock. Try again before checkout.');
+    }
+  };
+  const stalls = menuStalls(categories);
+  const visibleCategories = categories.filter(category => !selectedStall || categoryParts(category).stall === selectedStall);
+  const filtered = products.filter(product => matchesMenu(product, categories, { stall: selectedStall, category: selectedCategory, search: searchTerm }));
+  const addToCart = product => {
+    if (processing || uncertain || stockStale) return;
+    if (!canSell(product)) {
+      toast.error('This product is unavailable or expired.');
       return;
     }
-
-    // Check if product is expired
-    if (product.expiration_tracking && product.expiration_date) {
-      const expirationDate = new Date(product.expiration_date);
-      if (expirationDate < new Date()) {
-        toast.error('Product has expired and cannot be sold');
-        return;
-      }
-    }
-
-    const existingItem = cart.find(item => item.product_id === product.id);
-    
-    if (existingItem) {
-      if (existingItem.quantity >= product.current_stock) {
-        toast.error('Cannot add more than available stock');
-        return;
-      }
-      updateQuantity(product.id, existingItem.quantity + 1);
-    } else {
-      setCart([...cart, {
-        product_id: product.id,
-        name: product.name,
-        price: parseFloat(product.selling_price),
-        quantity: 1,
-        available_stock: product.current_stock
-      }]);
-    }
-  };
-
-  const updateQuantity = (productId, newQuantity) => {
-    if (newQuantity <= 0) {
-      removeFromCart(productId);
+    const current = cart.find(i => i.product_id === product.id);
+    if (current && current.quantity >= Number(product.current_stock)) {
+      toast.error('All available stock is already in the cart.');
       return;
     }
-
-    setCart(cart.map(item => {
-      if (item.product_id === productId) {
-        if (newQuantity > item.available_stock) {
-          toast.error('Cannot exceed available stock');
-          return item;
-        }
-        return { ...item, quantity: newQuantity };
-      }
-      return item;
-    }));
+    setCart(previous => addProduct(previous, product));
   };
-
-  const removeFromCart = (productId) => {
-    setCart(cart.filter(item => item.product_id !== productId));
-  };
-
+  const changeQuantity = (id, delta) => setCart(previous => changeCartQuantity(previous, id, delta));
   const clearCart = () => {
     setCart([]);
-    setSelectedCustomer(null);
-    setPaymentMethod('cash');
+    setCustomerId('');
     setAmountReceived('');
+    setPaymentMethod('cash');
   };
-
-  const calculateSubtotal = () => {
-    return cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
-  };
-
-  const calculateTotal = () => {
-    return calculateSubtotal(); // Can add tax/discount here if needed
-  };
-
-  const calculateChange = () => {
-    if (paymentMethod !== 'cash') return 0;
-    const received = parseFloat(amountReceived) || 0;
-    const total = calculateTotal();
-    return Math.max(0, received - total);
-  };
-
+  const total = cartSubtotal(cart);
+  const itemCount = cart.reduce((sum, item) => sum + item.quantity, 0);
   const handleCheckout = async () => {
-    if (cart.length === 0) {
-      toast.error('Cart is empty');
+    if (checkoutLock.current || processing || uncertain || stockStale) return;
+    const validationError = checkoutError(cart, paymentMethod, amountReceived);
+    if (validationError) {
+      toast.error(validationError);
+      if (cart.length && paymentMethod === 'cash') document.getElementById('cash-received')?.focus();
       return;
     }
-
-    if (paymentMethod === 'cash') {
-      const received = parseFloat(amountReceived) || 0;
-      const total = calculateTotal();
-      if (received < total) {
-        toast.error('Amount received is less than total');
-        return;
-      }
-    }
-
+    checkoutLock.current = true;
     setProcessing(true);
-
+    sessionStorage.setItem(pendingKey, JSON.stringify({
+      time: new Date().toISOString(),
+      total
+    }));
     try {
-      const saleData = {
-        customer_id: selectedCustomer?.id || null,
-        items: cart.map(item => ({
-          product_id: item.product_id,
-          quantity: item.quantity
-        })),
-        payment_method: paymentMethod,
-        amount_received: paymentMethod === 'cash' ? parseFloat(amountReceived) : calculateTotal(),
-        discount: 0,
-        tax: 0
-      };
-
-      const response = await api.post('/sales', saleData);
-      
-      setReceiptData(response.data.data);
-      setShowReceipt(true);
+      const response = await api.post('/sales', salePayload(cart, { customerId, paymentMethod, amountReceived }));
+      sessionStorage.removeItem(pendingKey);
+      setCartOpen(false);
+      setReceipt(response.data.data);
       clearCart();
-      toast.success('Sale completed successfully!');
-      
-      // Refresh products to update stock
-      const productsRes = await api.get('/products?status=active');
-      setProducts(productsRes.data.data);
-    } catch (error) {
-      toast.error(error.response?.data?.message || 'Failed to process sale');
+      toast.success('Sale complete. Your receipt is ready.');
+      await refreshStock({ saleSaved: true });
+    } catch (err) {
+      if (!err.response || err.response.status >= 500) {
+        setUncertain(true);
+        toast.error('The sale result is unconfirmed. Check sales history before trying again.');
+      } else {
+        sessionStorage.removeItem(pendingKey);
+        toast.error(err.response.data?.message || 'The sale could not be completed.');
+        await refreshStock();
+      }
     } finally {
+      checkoutLock.current = false;
       setProcessing(false);
     }
   };
-
-  const printReceipt = () => {
-    window.print();
-  };
-
-  if (loading) {
-    return <Loading message="Loading POS..." />;
-  }
-
-  return (
-    <div className="h-full flex flex-col lg:flex-row gap-4">
-      {/* Left Side - Products */}
-      <div className="flex-1 flex flex-col space-y-4">
-        {/* Search and Filters */}
-        <div className="card">
-          <div className="flex flex-col sm:flex-row gap-3">
-            <div className="flex-1 relative">
-              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" size={20} />
-              <input
-                type="text"
-                placeholder="Search products by name, SKU, or barcode..."
-                value={searchTerm}
-                onChange={(e) => setSearchTerm(e.target.value)}
-                className="input pl-10"
-              />
-            </div>
-            <select
-              value={selectedCategory}
-              onChange={(e) => setSelectedCategory(e.target.value)}
-              className="input sm:w-48"
-            >
-              <option value="">All Categories</option>
-              {categories.map(cat => (
-                <option key={cat.id} value={cat.id}>{cat.name}</option>
-              ))}
-            </select>
+  if (loading) return <Loading message="Getting your counter ready…" />;
+  if (error) return <ErrorState message={error} onRetry={fetchData} />;
+  const orderPanel = <section id="current-order" className="card pos-cart"><fieldset disabled={processing || uncertain} className="min-w-0"><div className="flex justify-between items-center gap-2 pb-4 border-b"><div className="flex items-center gap-2"><h2 className="section-heading">Current order</h2><span className="badge badge-secondary">{itemCount}</span></div>{cart.length > 0 && <button className="text-link" onClick={() => setClearConfirm(true)} type="button">Clear</button>}</div>
+        <div className="max-h-80 overflow-y-auto mb-5"><CartItems items={cart}>{cart.length ? cart.map(item => <div className="cart-line" key={item.product_id}><div className="min-w-0"><h3 className="text-xs font-semibold break-words">{item.name}</h3><p className="text-xs text-gray-500 mt-1">{formatCurrency(item.price)} each</p><div className="quantity-control mt-3"><button onClick={() => changeQuantity(item.product_id, -1)} aria-label={`Decrease ${item.name} quantity`} title="Decrease quantity" type="button"><Minus size={14} /></button><span aria-live="polite">{item.quantity}</span><button onClick={() => changeQuantity(item.product_id, 1)} disabled={item.quantity >= item.available_stock} aria-label={`Increase ${item.name} quantity`} title="Increase quantity" type="button"><Plus size={14} /></button></div></div><div className="text-right"><p className="text-xs font-semibold">{formatCurrency(item.price * item.quantity)}</p><button className="icon-button mt-4" onClick={() => setCart(previous => previous.filter(i => i.product_id !== item.product_id))} aria-label={`Remove ${item.name}`} title="Remove item" type="button"><Trash2 size={15} /></button></div></div>) : <EmptyState title="A fresh order starts here" message="Tap a product to add it to the order." />}</CartItems></div>
+        <div className="space-y-4"><div><label className="label" htmlFor="order-customer">Customer</label><select id="order-customer" className="input" value={customerId} onChange={e => setCustomerId(e.target.value)}><option value="">Walk-in customer</option>{customers.map(c => <option key={c.id} value={c.id}>{c.name}</option>)}</select></div>
+          <div><p id="payment-label" className="label">Payment method</p><div className="payment-options" role="group" aria-labelledby="payment-label">{paymentMethods.map(({
+                  id,
+                  label,
+                  icon: Icon
+                }) => <button key={id} className="payment-option" aria-pressed={paymentMethod === id} onClick={() => setPaymentMethod(id)} type="button"><Icon size={18} />{label}</button>)}</div></div>
+          {paymentMethod === 'cash' && <div><label className="label" htmlFor="cash-received">Cash received</label><div className="flex gap-2"><input id="cash-received" className="input" type="number" min="0" step="0.01" inputMode="decimal" placeholder="0.00" value={amountReceived} onChange={e => setAmountReceived(e.target.value)} /><button className="btn btn-secondary text-xs" disabled={!cart.length} onClick={() => setAmountReceived(total.toFixed(2))} type="button">Exact</button></div><p className="text-xs text-gray-500 mt-2" aria-live="polite">{Number(amountReceived) >= total && cart.length ? 'Change: ' + formatCurrency(cashChange(amountReceived, total)) : 'Enter the amount received from your customer.'}</p></div>}
+        </div>
+        <div className="border-t mt-5 pt-4"><p className="flex justify-between text-xs text-gray-500"><span>Subtotal · {itemCount} items</span><span>{formatCurrency(total)}</span></p><div className="cart-total"><span>Total</span><output key={total} aria-live="polite">{formatCurrency(total)}</output></div><button className="btn btn-primary w-full" style={{
+              minHeight: 50
+            }} onClick={handleCheckout} disabled={!cart.length || processing || uncertain || stockStale} aria-busy={processing} type="button">{processing ? <><Loader2 size={18} className="animate-spin" /> Completing sale…</> : <><CheckCircle2 size={18} /> Complete sale <ArrowRight size={16} /></>}</button><p className="text-center text-xs text-gray-500 mt-3">A receipt is ready after every completed sale.</p></div>
+      </fieldset></section>;
+  return <div className={`space-y-6 pos-page ${compact ? 'pos-compact' : ''}`}>
+    <div className="flex flex-wrap justify-between gap-3 items-end"><div><p className="eyebrow">Made for the daily rush</p><h1 className="page-title">Point of sale</h1><p className="page-description">Pick a favorite. Build the order. Make their day.</p></div></div>
+    {uncertain && <div className="card border-amber-300" role="alert"><h2 className="font-semibold mb-2">Check the previous sale before continuing</h2><p className="text-sm text-gray-600 mb-3">The server may have saved the sale before the connection was interrupted. Compare the time and total in sales history to avoid charging twice.</p><div className="flex flex-wrap gap-2"><Link to="/sales" className="btn btn-secondary" target="_blank" rel="noreferrer">Review sales history <ArrowRight size={15} /></Link><button className="btn btn-primary" onClick={() => setReviewConfirm(true)} type="button">I’ve reviewed the sale</button></div></div>}
+    {stockStale && <div className="stock-banner" role="alert"><p>Refresh stock before starting another sale.</p><button className="btn btn-secondary" onClick={refreshStock} type="button">Refresh stock</button></div>}
+    {products.length > 0 && products.every(product => Number(product.current_stock) <= 0) && <div className="stock-banner" role="status"><p>Menu loaded. Enter opening stock before selling these items.</p>{hasRole(['admin', 'manager']) && <Link to="/inventory" className="text-link">Set up inventory <ArrowRight size={15} /></Link>}</div>}
+    <div ref={setLayoutNode} className="pos-layout">
+      <section className="pos-catalog space-y-4"><div className="relative"><Search size={18} className="absolute left-4 top-3.5 text-gray-400" /><input className="input pl-11" aria-label="Search products by name, SKU or barcode" placeholder="Search menu, stall, SKU or scan a barcode…" value={searchTerm} onChange={e => setSearchTerm(e.target.value)} /></div>
+        <div>
+          <p className="label">Choose a stall</p>
+          <div className="category-tabs" role="group" aria-label="Menu stalls">
+            <button type="button" className="category-tab" aria-pressed={!selectedStall} onClick={() => { setSelectedStall(''); setSelectedCategory(''); }}>All stalls</button>
+            {stalls.map(stall => <button type="button" key={stall} className="category-tab" aria-pressed={selectedStall === stall} onClick={() => { setSelectedStall(stall); setSelectedCategory(''); }}>{stall}</button>)}
           </div>
         </div>
-
-        {/* Products Grid */}
-        <div className="flex-1 card overflow-y-auto">
-          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3">
-            {filteredProducts.map(product => (
-              <button
-                key={product.id}
-                onClick={() => addToCart(product)}
-                disabled={product.current_stock === 0}
-                className={`p-3 border-2 rounded-lg text-left transition-all ${
-                  product.current_stock === 0
-                    ? 'border-gray-200 bg-gray-50 cursor-not-allowed opacity-50'
-                    : 'border-gray-200 hover:border-red-500 hover:shadow-md'
-                }`}
-              >
-                <div className="aspect-square bg-gray-100 rounded-lg mb-2 flex items-center justify-center">
-                  <ShoppingCart className="text-gray-400" size={32} />
-                </div>
-                <h4 className="font-medium text-sm text-gray-900 truncate">{product.name}</h4>
-                <p className="text-xs text-gray-500 mb-1">{product.category?.name}</p>
-                <p className="text-lg font-bold text-red-600">{formatCurrency(product.selling_price)}</p>
-                <p className={`text-xs ${product.current_stock <= product.minimum_stock ? 'text-red-600' : 'text-gray-500'}`}>
-                  Stock: {product.current_stock}
-                </p>
-              </button>
-            ))}
-          </div>
-          {filteredProducts.length === 0 && (
-            <div className="text-center py-12 text-gray-500">
-              No products found
-            </div>
-          )}
-        </div>
-      </div>
-
-      {/* Right Side - Cart */}
-      <div className="w-full lg:w-96 flex flex-col space-y-4">
-        {/* Cart Items */}
-        <div className="card flex-1 flex flex-col">
-          <div className="flex items-center justify-between mb-4">
-            <h3 className="text-lg font-semibold">Cart</h3>
-            {cart.length > 0 && (
-              <button onClick={clearCart} className="text-sm text-red-600 hover:text-red-700">
-                Clear All
-              </button>
-            )}
-          </div>
-
-          <div className="flex-1 overflow-y-auto space-y-2 mb-4">
-            {cart.length === 0 ? (
-              <div className="text-center py-12 text-gray-500">
-                <ShoppingCart className="mx-auto mb-2" size={48} />
-                <p>Cart is empty</p>
-              </div>
-            ) : (
-              cart.map(item => (
-                <div key={item.product_id} className="flex items-center gap-2 p-2 bg-gray-50 rounded-lg">
-                  <div className="flex-1 min-w-0">
-                    <h4 className="font-medium text-sm truncate">{item.name}</h4>
-                    <p className="text-xs text-gray-500">{formatCurrency(item.price)} each</p>
-                  </div>
-                  <div className="flex items-center gap-1">
-                    <button
-                      onClick={() => updateQuantity(item.product_id, item.quantity - 1)}
-                      className="p-1 bg-white rounded hover:bg-gray-200"
-                    >
-                      <Minus size={16} />
-                    </button>
-                    <span className="w-8 text-center font-medium">{item.quantity}</span>
-                    <button
-                      onClick={() => updateQuantity(item.product_id, item.quantity + 1)}
-                      className="p-1 bg-white rounded hover:bg-gray-200"
-                    >
-                      <Plus size={16} />
-                    </button>
-                  </div>
-                  <div className="w-20 text-right font-semibold">
-                    {formatCurrency(item.price * item.quantity)}
-                  </div>
-                  <button
-                    onClick={() => removeFromCart(item.product_id)}
-                    className="p-1 text-red-600 hover:bg-red-50 rounded"
-                  >
-                    <Trash2 size={16} />
-                  </button>
-                </div>
-              ))
-            )}
-          </div>
-
-          {/* Customer Selection */}
-          <div className="border-t pt-4 mb-4">
-            <label className="label">Customer (Optional)</label>
-            <select
-              value={selectedCustomer?.id || ''}
-              onChange={(e) => {
-                const customer = customers.find(c => c.id === parseInt(e.target.value));
-                setSelectedCustomer(customer);
-              }}
-              className="input"
-            >
-              <option value="">Walk-in Customer</option>
-              {customers.map(customer => (
-                <option key={customer.id} value={customer.id}>
-                  {customer.name}
-                </option>
-              ))}
-            </select>
-          </div>
-
-          {/* Payment Method */}
-          <div className="mb-4">
-            <label className="label">Payment Method</label>
-            <select
-              value={paymentMethod}
-              onChange={(e) => setPaymentMethod(e.target.value)}
-              className="input"
-            >
-              <option value="cash">Cash</option>
-              <option value="gcash">GCash</option>
-              <option value="card">Card</option>
-              <option value="other">Other</option>
-            </select>
-          </div>
-
-          {/* Cash Payment Fields */}
-          {paymentMethod === 'cash' && (
-            <div className="mb-4">
-              <label className="label">Amount Received</label>
-              <input
-                type="number"
-                value={amountReceived}
-                onChange={(e) => setAmountReceived(e.target.value)}
-                className="input"
-                placeholder="0.00"
-                step="0.01"
-              />
-              {amountReceived && (
-                <div className="mt-2 p-2 bg-green-50 rounded">
-                  <p className="text-sm text-green-700">
-                    Change: <span className="font-bold">{formatCurrency(calculateChange())}</span>
-                  </p>
-                </div>
-              )}
-            </div>
-          )}
-
-          {/* Totals */}
-          <div className="border-t pt-4 space-y-2">
-            <div className="flex justify-between text-sm">
-              <span>Subtotal:</span>
-              <span className="font-semibold">{formatCurrency(calculateSubtotal())}</span>
-            </div>
-            <div className="flex justify-between text-lg font-bold">
-              <span>Total:</span>
-              <span className="text-red-600">{formatCurrency(calculateTotal())}</span>
-            </div>
-          </div>
-
-          {/* Checkout Button */}
-          <button
-            onClick={handleCheckout}
-            disabled={cart.length === 0 || processing}
-            className="btn btn-primary w-full py-3 text-lg mt-4"
-          >
-            {processing ? 'Processing...' : 'Complete Sale'}
-          </button>
-        </div>
-      </div>
-
-      {/* Receipt Modal */}
-      <Modal
-        isOpen={showReceipt}
-        onClose={() => setShowReceipt(false)}
-        title="Sale Receipt"
-        size="md"
-      >
-        <div className="print-area">
-          <div className="text-center mb-6">
-            <h2 className="text-2xl font-bold text-red-600">ESTRELLA FOOD HUB</h2>
-            <p className="text-sm text-gray-600">Point of Sale and Inventory Management</p>
-            <p className="text-xs text-gray-500 mt-1">123 Main Street, City, Province</p>
-            <p className="text-xs text-gray-500">Tel: 09123456789</p>
-          </div>
-
-          {receiptData && (
-            <>
-              <div className="border-t border-b border-dashed py-3 mb-3 text-sm">
-                <div className="flex justify-between">
-                  <span>Transaction:</span>
-                  <span className="font-medium">{receiptData.transaction_number}</span>
-                </div>
-                <div className="flex justify-between">
-                  <span>Date:</span>
-                  <span>{new Date(receiptData.created_at).toLocaleString()}</span>
-                </div>
-                <div className="flex justify-between">
-                  <span>Cashier:</span>
-                  <span>{receiptData.cashier.first_name} {receiptData.cashier.last_name}</span>
-                </div>
-                {receiptData.customer && (
-                  <div className="flex justify-between">
-                    <span>Customer:</span>
-                    <span>{receiptData.customer.name}</span>
-                  </div>
-                )}
-              </div>
-
-              <table className="w-full text-sm mb-3">
-                <thead>
-                  <tr className="border-b">
-                    <th className="text-left py-2">Item</th>
-                    <th className="text-center">Qty</th>
-                    <th className="text-right">Price</th>
-                    <th className="text-right">Total</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {receiptData.items.map((item, index) => (
-                    <tr key={index} className="border-b">
-                      <td className="py-2">{item.product.name}</td>
-                      <td className="text-center">{item.quantity}</td>
-                      <td className="text-right">{formatCurrency(item.unit_price)}</td>
-                      <td className="text-right">{formatCurrency(item.subtotal)}</td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-
-              <div className="border-t border-dashed pt-3 space-y-1 text-sm">
-                <div className="flex justify-between">
-                  <span>Subtotal:</span>
-                  <span>{formatCurrency(receiptData.subtotal)}</span>
-                </div>
-                <div className="flex justify-between text-lg font-bold">
-                  <span>TOTAL:</span>
-                  <span>{formatCurrency(receiptData.total)}</span>
-                </div>
-                <div className="flex justify-between">
-                  <span>Payment Method:</span>
-                  <span className="uppercase">{receiptData.payment_method}</span>
-                </div>
-                {receiptData.payment_method === 'cash' && (
-                  <>
-                    <div className="flex justify-between">
-                      <span>Amount Received:</span>
-                      <span>{formatCurrency(receiptData.amount_received)}</span>
-                    </div>
-                    <div className="flex justify-between font-semibold">
-                      <span>Change:</span>
-                      <span>{formatCurrency(receiptData.change_amount)}</span>
-                    </div>
-                  </>
-                )}
-              </div>
-
-              <div className="text-center mt-6 text-xs text-gray-500">
-                <p>Thank you for your purchase!</p>
-                <p className="mt-1">This serves as your official receipt</p>
-              </div>
-            </>
-          )}
-        </div>
-
-        <div className="flex gap-2 mt-6 no-print">
-          <button onClick={printReceipt} className="btn btn-primary flex-1 flex items-center justify-center gap-2">
-            <Printer size={20} />
-            Print Receipt
-          </button>
-          <button onClick={() => setShowReceipt(false)} className="btn btn-secondary flex-1">
-            Close
-          </button>
-        </div>
-      </Modal>
+        <div className="category-tabs" role="group" aria-label="Product categories"><button className="category-tab" aria-pressed={!selectedCategory} onClick={() => setSelectedCategory('')} type="button">All sections <span className="opacity-70">{products.filter(product => matchesMenu(product, categories, {stall:selectedStall})).length}</span></button>{visibleCategories.map(c => <button key={c.id} className="category-tab" aria-pressed={String(selectedCategory) === String(c.id)} onClick={() => setSelectedCategory(c.id)} type="button">{selectedStall ? categoryParts(c).section : c.name}</button>)}</div>
+        <div className="flex justify-between items-center text-xs text-gray-500 py-1"><span>{filtered.length} products available</span><span>Tap to add to order</span></div>
+        <div className="product-grid">{filtered.map(p => {
+            const available = canSell(p);
+            return <button key={p.id} className="product-tile" onClick={() => addToCart(p)} disabled={!available || processing || uncertain || stockStale} aria-label={`Add ${p.name}, ${formatCurrency(p.selling_price)}, ${p.current_stock} in stock`} type="button"><div className="product-art"><UtensilsCrossed size={30} /></div><h3>{p.name}</h3><small>{p.category?.name || 'Uncategorized'} · {available ? p.current_stock + ' in stock' : 'Unavailable'}</small><div className="product-tile-bottom"><span className="product-price">{formatCurrency(p.selling_price)}</span><span className="product-plus"><Plus size={16} /></span></div></button>;
+          })}</div>
+        {!filtered.length && <EmptyState title="No matching products" message="Try a different name, SKU or category." />}
+      </section>
+      {!compact && orderPanel}
     </div>
-  );
-};
-
-export default POS;
+    {compact && <div className="pos-order-dock"><button type="button" className="btn btn-primary w-full" onClick={() => setCartOpen(true)} disabled={processing} aria-haspopup="dialog"><ShoppingCart size={19} /><span>View order ({itemCount})</span><strong>{formatCurrency(total)}</strong></button></div>}
+    {compact && <Modal isOpen={cartOpen} onClose={() => setCartOpen(false)} title="Current order" size="cart" busy={processing}>{orderPanel}</Modal>}
+    <ConfirmDialog isOpen={clearConfirm} onClose={() => setClearConfirm(false)} onConfirm={() => {
+      clearCart();
+      setClearConfirm(false);
+    }} title="Clear this order?" message="All items and payment details in this order will be removed." confirmText="Clear order" />
+    <ConfirmDialog isOpen={reviewConfirm} onClose={() => setReviewConfirm(false)} onConfirm={async () => {
+      sessionStorage.removeItem(pendingKey);
+      setUncertain(false);
+      clearCart();
+      setReviewConfirm(false);
+      await fetchData();
+    }} title="Start a fresh order?" message="Only continue after confirming whether the previous sale was saved in sales history. The current cart will be cleared to help prevent a duplicate sale." confirmText="Start fresh" />
+    <Modal isOpen={!!receipt} onClose={() => setReceipt(null)} title="Sale complete · Receipt" size="sm"><div className="no-print flex items-center gap-2 text-green-700 text-sm font-semibold mb-5"><CheckCircle2 size={19} /> Payment recorded successfully</div><Receipt sale={receipt} /><div className="flex flex-wrap gap-2 mt-6 no-print"><button className="btn btn-primary flex-1" onClick={() => window.print()} type="button"><Printer size={17} /> Print receipt</button><button className="btn btn-secondary" onClick={() => setReceipt(null)} type="button">Next order</button></div></Modal>
+  </div>;
+}

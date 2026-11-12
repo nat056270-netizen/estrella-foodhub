@@ -1,0 +1,12 @@
+# Generated independent team repositories stay outside the source snapshot.
+/team-workspaces/
+# Local identities, machine settings and credentials
+**/.env
+**/.env.local
+**/.env.production
+**/.team-member.json
+**/OPEN_ME_FIRST.md
+**/node_modules/
+**/dist/
+**/*.log
+

@@ -1,76 +1,31 @@
-import { AlertTriangle } from 'lucide-react';
-import { useEffect, useRef } from 'react';
-
-const ConfirmDialog = ({ isOpen, onClose, onConfirm, title, message, confirmText = 'Confirm', cancelText = 'Cancel' }) => {
-  const confirmButtonRef = useRef(null);
-
-  useEffect(() => {
-    if (isOpen) {
-      confirmButtonRef.current?.focus();
-      
-      const handleEsc = (e) => {
-        if (e.key === 'Escape') onClose();
-      };
-      document.addEventListener('keydown', handleEsc);
-      
-      return () => {
-        document.removeEventListener('keydown', handleEsc);
-      };
+import { AlertTriangle, Loader2 } from 'lucide-react';
+import { useRef, useState } from 'react';
+import Modal from './Modal';
+const ConfirmDialog = ({
+  isOpen,
+  onClose,
+  onConfirm,
+  title,
+  message,
+  confirmText = 'Confirm',
+  cancelText = 'Cancel'
+}) => {
+  const [busy, setBusy] = useState(false);
+  const pending = useRef(false);
+  const confirm = async () => {
+    if (pending.current) return;
+    pending.current = true;
+    setBusy(true);
+    try {
+      await onConfirm();
+    } finally {
+      pending.current = false;
+      setBusy(false);
     }
-  }, [isOpen, onClose]);
-
-  if (!isOpen) return null;
-
-  return (
-    <div className="fixed inset-0 z-50 overflow-y-auto" role="alertdialog" aria-modal="true" aria-labelledby="dialog-title" aria-describedby="dialog-description">
-      <div className="flex items-center justify-center min-h-screen px-4 pt-4 pb-20 text-center sm:block sm:p-0">
-        {/* Overlay */}
-        <div
-          className="fixed inset-0 transition-opacity bg-black bg-opacity-50"
-          onClick={onClose}
-          aria-hidden="true"
-        />
-
-        {/* Dialog */}
-        <div className="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
-          <div className="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
-            <div className="sm:flex sm:items-start">
-              <div className="mx-auto flex-shrink-0 flex items-center justify-center h-12 w-12 rounded-full bg-red-100 sm:mx-0 sm:h-10 sm:w-10" aria-hidden="true">
-                <AlertTriangle className="h-6 w-6 text-red-600" />
-              </div>
-              <div className="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left">
-                <h3 id="dialog-title" className="text-lg leading-6 font-medium text-gray-900">
-                  {title}
-                </h3>
-                <div className="mt-2">
-                  <p id="dialog-description" className="text-sm text-gray-500">
-                    {message}
-                  </p>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div className="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse gap-2">
-            <button
-              ref={confirmButtonRef}
-              type="button"
-              onClick={onConfirm}
-              className="btn btn-danger w-full sm:w-auto"
-            >
-              {confirmText}
-            </button>
-            <button
-              type="button"
-              onClick={onClose}
-              className="btn btn-secondary w-full sm:w-auto mt-3 sm:mt-0"
-            >
-              {cancelText}
-            </button>
-          </div>
-        </div>
-      </div>
-    </div>
-  );
+  };
+  return <Modal isOpen={isOpen} onClose={onClose} title={title} size="sm" busy={busy} role="alertdialog">
+    <div className="flex items-start gap-4 mb-6"><span className="p-3 rounded-xl bg-red-50 text-red-600"><AlertTriangle size={22} /></span><p className="text-sm text-gray-600 leading-relaxed">{message}</p></div>
+    <div className="flex flex-wrap justify-end gap-3"><button autoFocus className="btn btn-secondary" onClick={onClose} disabled={busy} type="button">{cancelText}</button><button className="btn btn-danger" onClick={confirm} disabled={busy} type="button">{busy && <Loader2 size={16} className="animate-spin" />}{busy ? 'Please wait…' : confirmText}</button></div>
+  </Modal>;
 };
-
 export default ConfirmDialog;

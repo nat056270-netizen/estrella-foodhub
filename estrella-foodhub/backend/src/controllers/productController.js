@@ -5,9 +5,9 @@ const { Op } = require('sequelize');
 exports.getAllProducts = async (req, res) => {
   try {
     const { search, category_id, status } = req.query;
-    
+
     const where = {};
-    
+
     if (search) {
       where[Op.or] = [
         { name: { [Op.like]: `%${search}%` } },
@@ -15,11 +15,11 @@ exports.getAllProducts = async (req, res) => {
         { barcode: { [Op.like]: `%${search}%` } }
       ];
     }
-    
+
     if (category_id) {
       where.category_id = category_id;
     }
-    
+
     if (status) {
       where.status = status;
     }
