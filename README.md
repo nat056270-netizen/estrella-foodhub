@@ -488,3 +488,18 @@ Built with modern web technologies and best practices for enterprise-level appli
 ---
 
 **© 2026 ESTRELLA FOOD HUB. All rights reserved.**
+
+## Git commit identity
+
+Before committing, configure this repository with your own GitHub identity:
+
+```bash
+git config --local user.name "Your name"
+git config --local user.email "YOUR_VERIFIED_GITHUB_EMAIL"
+```
+
+Use an email verified on your GitHub account or the exact no-reply address from GitHub Settings > Emails. GitHub links commit authors through this email. Signing in to push and setting a display name do not change earlier commit authors.
+
+Check the active values with git config --get user.name and git config --get user.email. Keep database credentials and local environment files out of commits.
+
+Reference: https://docs.github.com/en/account-and-profile/how-tos/contribution-settings/troubleshooting-missing-contributions
