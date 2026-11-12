@@ -25,21 +25,15 @@ test('each fries size includes all five supplied flavors at its specified price'
     assert.ok(variants.every(item=>item.price===price));
   }
 });
-test('all price rows from the supplied source are represented without price changes', async () => {
-  const fs=await import('node:fs/promises');
-  const source=await fs.readFile(new URL('../../database/menu/source-menu.md',import.meta.url),'utf8');
-  let rows=0;
-  for(const line of source.split(/\r?\n/)) {
-    if(!line.startsWith('|')) continue;
-    const cells=line.split('|').slice(1,-1).map(cell=>cell.trim());
-    const prices=cells.slice(1).map(cell=>cell.match(/\d+/)?.[0]).filter(Boolean).map(Number);
-    if(!prices.length) continue;
-    const matches=catalog.sections.flatMap(section=>section.items).filter(item=>item.name===cells[0]||item.name.startsWith(cells[0]+' (')||item.name.startsWith(cells[0]+' - '));
-    assert.ok(matches.length,'Missing '+cells[0]);
-    for(const price of prices) assert.ok(matches.some(item=>item.price===price),'Wrong price for '+cells[0]);
-    rows++;
+test('all price rows from the supplied source are represented without price changes', () => {
+  const source = require('../../database/menu/source-menu.json');
+  assert.equal(source.currency, 'PHP');
+  assert.equal(source.rows.length, 160);
+  for (const { product, prices } of source.rows) {
+    const matches = catalog.sections.flatMap(section => section.items).filter(item => item.name === product || item.name.startsWith(product + ' (') || item.name.startsWith(product + ' - '));
+    assert.ok(matches.length, 'Missing ' + product);
+    for (const price of prices) assert.ok(matches.some(item => item.price === price), 'Wrong price for ' + product);
   }
-  assert.equal(rows,160);
 });
 test('stall and category filters combine correctly and search includes stall names', () => {
   const categories=[{id:1,name:'Pizza / 10 Inches'},{id:2,name:'B&B / Sizzling Meals'},{id:3,name:'Pizza / 6 Inches'}];

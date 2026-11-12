@@ -1,0 +1,990 @@
+{
+  "currency": "PHP",
+  "rows": [
+    {
+      "product": "Veggies (4pcs)",
+      "prices": [
+        45
+      ]
+    },
+    {
+      "product": "Crabstick (4pcs)",
+      "prices": [
+        55
+      ]
+    },
+    {
+      "product": "Bacon & Cheese (4pcs)",
+      "prices": [
+        60
+      ]
+    },
+    {
+      "product": "Octobits (4pcs)",
+      "prices": [
+        65
+      ]
+    },
+    {
+      "product": "Cheese Bomb (4pcs)",
+      "prices": [
+        85
+      ]
+    },
+    {
+      "product": "Takoyaki Promo (7pcs)",
+      "prices": [
+        50
+      ]
+    },
+    {
+      "product": "Take-out Fee 4pcs",
+      "prices": [
+        5
+      ]
+    },
+    {
+      "product": "Take-out Fee 6pcs",
+      "prices": [
+        8
+      ]
+    },
+    {
+      "product": "Take-out Fee 8pcs",
+      "prices": [
+        10
+      ]
+    },
+    {
+      "product": "Take-out Fee 10–12pcs",
+      "prices": [
+        12
+      ]
+    },
+    {
+      "product": "Take-out Fee 15–20pcs",
+      "prices": [
+        20
+      ]
+    },
+    {
+      "product": "Ultimate Hawaiian 10\"",
+      "prices": [
+        249
+      ]
+    },
+    {
+      "product": "6 Cheese 10\"",
+      "prices": [
+        279
+      ]
+    },
+    {
+      "product": "Triple Pepperoni 10\"",
+      "prices": [
+        249
+      ]
+    },
+    {
+      "product": "Cheesy Ham & Bacon 10\"",
+      "prices": [
+        249
+      ]
+    },
+    {
+      "product": "Creamy Spinach 10\"",
+      "prices": [
+        329
+      ]
+    },
+    {
+      "product": "Beef Supreme 10\"",
+      "prices": [
+        279
+      ]
+    },
+    {
+      "product": "Chicken Alfredo 10\"",
+      "prices": [
+        299
+      ]
+    },
+    {
+      "product": "5 Cheese 6\"",
+      "prices": [
+        139
+      ]
+    },
+    {
+      "product": "Hawaiian 6\"",
+      "prices": [
+        139
+      ]
+    },
+    {
+      "product": "Creamy Spinach 6\"",
+      "prices": [
+        139
+      ]
+    },
+    {
+      "product": "Pepperoni 6\"",
+      "prices": [
+        139
+      ]
+    },
+    {
+      "product": "Beef Deluxe 6\"",
+      "prices": [
+        139
+      ]
+    },
+    {
+      "product": "Tocino Silog",
+      "prices": [
+        99
+      ]
+    },
+    {
+      "product": "Tender Juicy Hotdog Silog",
+      "prices": [
+        75
+      ]
+    },
+    {
+      "product": "Spam Silog",
+      "prices": [
+        89
+      ]
+    },
+    {
+      "product": "Cornbeef Silog",
+      "prices": [
+        75
+      ]
+    },
+    {
+      "product": "Bacon Silog",
+      "prices": [
+        99
+      ]
+    },
+    {
+      "product": "Shanghai Silog",
+      "prices": [
+        75
+      ]
+    },
+    {
+      "product": "Pork Sisig Platter",
+      "prices": [
+        205
+      ]
+    },
+    {
+      "product": "Hungarian Sausage Platter",
+      "prices": [
+        189
+      ]
+    },
+    {
+      "product": "Chicken Sisig Platter",
+      "prices": [
+        199
+      ]
+    },
+    {
+      "product": "Tuna Sisig Platter",
+      "prices": [
+        189
+      ]
+    },
+    {
+      "product": "Longganisa Rice Bowl",
+      "prices": [
+        69
+      ]
+    },
+    {
+      "product": "Hamonada Rice Bowl",
+      "prices": [
+        79
+      ]
+    },
+    {
+      "product": "Pork Tocino Rice Bowl",
+      "prices": [
+        79
+      ]
+    },
+    {
+      "product": "Chicken Karaage Rice Bowl",
+      "prices": [
+        89
+      ]
+    },
+    {
+      "product": "Deep Fried Chicken",
+      "prices": [
+        139
+      ]
+    },
+    {
+      "product": "Beef Burger Steak",
+      "prices": [
+        119
+      ]
+    },
+    {
+      "product": "Pork Sisig",
+      "prices": [
+        139
+      ]
+    },
+    {
+      "product": "Chicken Sisig",
+      "prices": [
+        129
+      ]
+    },
+    {
+      "product": "Tuna Sisig",
+      "prices": [
+        119
+      ]
+    },
+    {
+      "product": "Hungarian Sausage",
+      "prices": [
+        119
+      ]
+    },
+    {
+      "product": "Bangus",
+      "prices": [
+        129
+      ]
+    },
+    {
+      "product": "Beef Tapa",
+      "prices": [
+        138
+      ]
+    },
+    {
+      "product": "Porkchop",
+      "prices": [
+        139
+      ]
+    },
+    {
+      "product": "Liempo",
+      "prices": [
+        139
+      ]
+    },
+    {
+      "product": "Hungarian (Wed Sale)",
+      "prices": [
+        99
+      ]
+    },
+    {
+      "product": "Chicken Sisig (Wed Sale)",
+      "prices": [
+        99
+      ]
+    },
+    {
+      "product": "Tuna Sisig (Wed Sale)",
+      "prices": [
+        99
+      ]
+    },
+    {
+      "product": "Beef Burger Steak (Wed Sale)",
+      "prices": [
+        99
+      ]
+    },
+    {
+      "product": "Classic Burger Buy 1 Get 1",
+      "prices": [
+        50
+      ]
+    },
+    {
+      "product": "Classic Burger Solo",
+      "prices": [
+        30
+      ]
+    },
+    {
+      "product": "Cheese Burger Buy 1 Get 1",
+      "prices": [
+        70
+      ]
+    },
+    {
+      "product": "Cheese Burger Solo",
+      "prices": [
+        40
+      ]
+    },
+    {
+      "product": "Egg Sandwich Buy 1 Get 1",
+      "prices": [
+        50
+      ]
+    },
+    {
+      "product": "Egg Sandwich Solo",
+      "prices": [
+        30
+      ]
+    },
+    {
+      "product": "Ham Sandwich Buy 1 Get 1",
+      "prices": [
+        79
+      ]
+    },
+    {
+      "product": "Ham Sandwich Solo",
+      "prices": [
+        45
+      ]
+    },
+    {
+      "product": "Ham & Cheese Buy 1 Get 1",
+      "prices": [
+        89
+      ]
+    },
+    {
+      "product": "Ham & Cheese Solo",
+      "prices": [
+        50
+      ]
+    },
+    {
+      "product": "Ham & Egg Buy 1 Get 1",
+      "prices": [
+        99
+      ]
+    },
+    {
+      "product": "Ham & Egg Solo",
+      "prices": [
+        55
+      ]
+    },
+    {
+      "product": "Overloaded Footlong Sandwich",
+      "prices": [
+        75
+      ]
+    },
+    {
+      "product": "Add Egg",
+      "prices": [
+        15
+      ]
+    },
+    {
+      "product": "Add Patty",
+      "prices": [
+        10
+      ]
+    },
+    {
+      "product": "Add Footlong",
+      "prices": [
+        15
+      ]
+    },
+    {
+      "product": "Add Cheese",
+      "prices": [
+        15
+      ]
+    },
+    {
+      "product": "Fries Small",
+      "prices": [
+        49
+      ]
+    },
+    {
+      "product": "Fries Medium",
+      "prices": [
+        69
+      ]
+    },
+    {
+      "product": "Fries Large",
+      "prices": [
+        89
+      ]
+    },
+    {
+      "product": "Bucket of Fries",
+      "prices": [
+        139
+      ]
+    },
+    {
+      "product": "Chicken Shawarma Wrap Solo",
+      "prices": [
+        69
+      ]
+    },
+    {
+      "product": "Beef Shawarma Wrap Solo",
+      "prices": [
+        79
+      ]
+    },
+    {
+      "product": "Shawarma Wrap All Meat",
+      "prices": [
+        89
+      ]
+    },
+    {
+      "product": "Chicken Buy 1 Take 1",
+      "prices": [
+        129
+      ]
+    },
+    {
+      "product": "Beef Buy 1 Take 1",
+      "prices": [
+        139
+      ]
+    },
+    {
+      "product": "Chicken Shawarma Rice",
+      "prices": [
+        99
+      ]
+    },
+    {
+      "product": "Beef Shawarma Rice",
+      "prices": [
+        109
+      ]
+    },
+    {
+      "product": "All Meat Shawarma Rice",
+      "prices": [
+        109
+      ]
+    },
+    {
+      "product": "Cheesy Beef Quesadilla",
+      "prices": [
+        149
+      ]
+    },
+    {
+      "product": "Cheesy Beef Tacos",
+      "prices": [
+        149
+      ]
+    },
+    {
+      "product": "Soft Mini Tacos",
+      "prices": [
+        149
+      ]
+    },
+    {
+      "product": "Shawarma Fries",
+      "prices": [
+        119
+      ]
+    },
+    {
+      "product": "Overloaded Nachos",
+      "prices": [
+        149
+      ]
+    },
+    {
+      "product": "Shawarma Burger Solo",
+      "prices": [
+        79
+      ]
+    },
+    {
+      "product": "Shawarma Burger Buy 1 Take 1",
+      "prices": [
+        139
+      ]
+    },
+    {
+      "product": "Plain Noodles",
+      "prices": [
+        39
+      ]
+    },
+    {
+      "product": "Buy 1 Take 1 Noodles",
+      "prices": [
+        60
+      ]
+    },
+    {
+      "product": "With JPS Siomai",
+      "prices": [
+        49
+      ]
+    },
+    {
+      "product": "With Beef Siomai",
+      "prices": [
+        49
+      ]
+    },
+    {
+      "product": "With Pork Siomai",
+      "prices": [
+        49
+      ]
+    },
+    {
+      "product": "With Chicken Siomai",
+      "prices": [
+        49
+      ]
+    },
+    {
+      "product": "With Pork & Shrimp Siomai",
+      "prices": [
+        49
+      ]
+    },
+    {
+      "product": "With Egg",
+      "prices": [
+        49
+      ]
+    },
+    {
+      "product": "With Wanton",
+      "prices": [
+        49
+      ]
+    },
+    {
+      "product": "Beef Siomai",
+      "prices": [
+        6
+      ]
+    },
+    {
+      "product": "Pork Siomai",
+      "prices": [
+        6
+      ]
+    },
+    {
+      "product": "Chicken Siomai",
+      "prices": [
+        6
+      ]
+    },
+    {
+      "product": "Pork & Shrimp",
+      "prices": [
+        6
+      ]
+    },
+    {
+      "product": "Wanton",
+      "prices": [
+        6
+      ]
+    },
+    {
+      "product": "Sharksfin",
+      "prices": [
+        6
+      ]
+    },
+    {
+      "product": "JPS Siomai",
+      "prices": [
+        8
+      ]
+    },
+    {
+      "product": "Egg",
+      "prices": [
+        15
+      ]
+    },
+    {
+      "product": "Classic Milktea",
+      "prices": [
+        75,
+        85
+      ]
+    },
+    {
+      "product": "Salted Caramel",
+      "prices": [
+        75,
+        85
+      ]
+    },
+    {
+      "product": "Cookies & Cream",
+      "prices": [
+        75,
+        85
+      ]
+    },
+    {
+      "product": "Vanilla",
+      "prices": [
+        75,
+        85
+      ]
+    },
+    {
+      "product": "Mocha",
+      "prices": [
+        75,
+        85
+      ]
+    },
+    {
+      "product": "Hokkaido",
+      "prices": [
+        79,
+        89
+      ]
+    },
+    {
+      "product": "Wintermelon",
+      "prices": [
+        79,
+        89
+      ]
+    },
+    {
+      "product": "Okinawa",
+      "prices": [
+        79,
+        89
+      ]
+    },
+    {
+      "product": "Strawberry Milktea",
+      "prices": [
+        79,
+        89
+      ]
+    },
+    {
+      "product": "Taro",
+      "prices": [
+        79,
+        89
+      ]
+    },
+    {
+      "product": "Matcha",
+      "prices": [
+        79,
+        89
+      ]
+    },
+    {
+      "product": "Chocolate",
+      "prices": [
+        75,
+        85
+      ]
+    },
+    {
+      "product": "Dark Chocolate",
+      "prices": [
+        75,
+        85
+      ]
+    },
+    {
+      "product": "Java Chip",
+      "prices": [
+        75,
+        85
+      ]
+    },
+    {
+      "product": "Very Rocky Road",
+      "prices": [
+        75,
+        85
+      ]
+    },
+    {
+      "product": "Strawberry Cheesecake Madness",
+      "prices": [
+        89,
+        99
+      ]
+    },
+    {
+      "product": "Choco Nutella Cream Cheese",
+      "prices": [
+        89,
+        99
+      ]
+    },
+    {
+      "product": "Cream Cheese Taro Special",
+      "prices": [
+        89,
+        99
+      ]
+    },
+    {
+      "product": "Foamy Matcha Cream Cheese",
+      "prices": [
+        89,
+        99
+      ]
+    },
+    {
+      "product": "Wintermelon Cheesecake Overload",
+      "prices": [
+        89,
+        99
+      ]
+    },
+    {
+      "product": "Cream Cheese Oreo Cookies",
+      "prices": [
+        89,
+        99
+      ]
+    },
+    {
+      "product": "Strawberry Fruit Tea",
+      "prices": [
+        70,
+        80
+      ]
+    },
+    {
+      "product": "Wintermelon Fruit Tea",
+      "prices": [
+        70,
+        80
+      ]
+    },
+    {
+      "product": "Blueberry Fruit Tea",
+      "prices": [
+        70,
+        80
+      ]
+    },
+    {
+      "product": "Passion Fruit Tea",
+      "prices": [
+        70,
+        80
+      ]
+    },
+    {
+      "product": "Pearl",
+      "prices": [
+        10
+      ]
+    },
+    {
+      "product": "Nutella",
+      "prices": [
+        20
+      ]
+    },
+    {
+      "product": "Nata",
+      "prices": [
+        10
+      ]
+    },
+    {
+      "product": "Mix Jelly",
+      "prices": [
+        15
+      ]
+    },
+    {
+      "product": "Coffee Jelly",
+      "prices": [
+        15
+      ]
+    },
+    {
+      "product": "Mozzarella Stick",
+      "prices": [
+        79
+      ]
+    },
+    {
+      "product": "Twister Fries",
+      "prices": [
+        89
+      ]
+    },
+    {
+      "product": "Crizzcut Fries",
+      "prices": [
+        89
+      ]
+    },
+    {
+      "product": "Churros",
+      "prices": [
+        89
+      ]
+    },
+    {
+      "product": "Mojos",
+      "prices": [
+        89
+      ]
+    },
+    {
+      "product": "Cordon Bleu & Fries",
+      "prices": [
+        89
+      ]
+    },
+    {
+      "product": "Nuggets & Fries",
+      "prices": [
+        99
+      ]
+    },
+    {
+      "product": "Crispy Fried Calamari",
+      "prices": [
+        99
+      ]
+    },
+    {
+      "product": "Plain Fries",
+      "prices": [
+        69
+      ]
+    },
+    {
+      "product": "Cheesy Fries",
+      "prices": [
+        89
+      ]
+    },
+    {
+      "product": "Overloaded Fries",
+      "prices": [
+        99
+      ]
+    },
+    {
+      "product": "Hungarian Sandwich",
+      "prices": [
+        139
+      ]
+    },
+    {
+      "product": "Pork Katsu Burger",
+      "prices": [
+        139
+      ]
+    },
+    {
+      "product": "Crispy Chicken Sandwich",
+      "prices": [
+        159
+      ]
+    },
+    {
+      "product": "Jalapeno Cheese Burger",
+      "prices": [
+        159
+      ]
+    },
+    {
+      "product": "Tempura with Rice",
+      "prices": [
+        139
+      ]
+    },
+    {
+      "product": "Ebi Tempura",
+      "prices": [
+        139
+      ]
+    },
+    {
+      "product": "Tempura & Gyoza",
+      "prices": [
+        149
+      ]
+    },
+    {
+      "product": "Combo 1",
+      "prices": [
+        399
+      ]
+    },
+    {
+      "product": "Combo 2",
+      "prices": [
+        499
+      ]
+    },
+    {
+      "product": "Family of 6",
+      "prices": [
+        699
+      ]
+    },
+    {
+      "product": "Barkada Bundle",
+      "prices": [
+        899
+      ]
+    },
+    {
+      "product": "Kahit Ano",
+      "prices": [
+        299
+      ]
+    },
+    {
+      "product": "Ikaw ang Bahala",
+      "prices": [
+        299
+      ]
+    },
+    {
+      "product": "Miski Ilan",
+      "prices": [
+        299
+      ]
+    },
+    {
+      "product": "Yung Ano",
+      "prices": [
+        299
+      ]
+    }
+  ]
+}

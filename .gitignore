@@ -28,3 +28,8 @@ uploads/
 database/backups/
 
 .env
+
+# Documentation is local; publish application files only.
+*.md
+*.markdown
+*.mdx
