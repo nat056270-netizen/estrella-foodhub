@@ -1,12 +1,30 @@
-# Generated independent team repositories stay outside the source snapshot.
-/team-workspaces/
-# Local identities, machine settings and credentials
-**/.env
-**/.env.local
-**/.env.production
-**/.team-member.json
-**/OPEN_ME_FIRST.md
-**/node_modules/
-**/dist/
-**/*.log
+# Dependencies
+node_modules/
+yarn.lock
 
+# Environment variables
+.env.local
+.env.production
+
+# Build outputs
+dist/
+build/
+*.log
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Uploads
+uploads/
+
+# Local pre-import catalog snapshots
+database/backups/
+
+.env
